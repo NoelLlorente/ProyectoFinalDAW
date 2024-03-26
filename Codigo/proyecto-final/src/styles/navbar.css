@@ -1,0 +1,18 @@
+nav{
+    background-color: rgba(0, 0, 0, 0.932);
+}
+.nav-link{
+    color: white;
+}
+
+.nav-link:hover{
+    color: darkgray;
+}
+
+.nav-link:focus{
+    color: gray;
+}
+
+.navbar-toggler:focus{
+    box-shadow: none;
+}
