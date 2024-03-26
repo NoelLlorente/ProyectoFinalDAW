@@ -1,12 +1,14 @@
 import logo from "../assets/img/logo.png";
+import { NavLink } from "react-router-dom";
+import "../styles/navbar.css";
 
 export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
-        <a className="navbar-brand">
+        <NavLink className="navbar-brand logo" to="/">
           <img src={logo} alt="logo" width="50" height="50" />
-        </a>
+        </NavLink>
         <button
           className="navbar-toggler bg-primary"
           type="button"
@@ -21,18 +23,32 @@ export const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 ">
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="#">
+              <NavLink to="/" className="nav-link" aria-current="page">
                 Home
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <NavLink
+                to="/sobre-nosotros"
+                className="nav-link"
+                aria-current="page"
+              >
+                Sobre Nosotros
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="#" className="nav-link">
                 Contacto
-              </a>
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="#" className="nav-link">
+                Blog
+              </NavLink>
             </li>
           </ul>
           <button className="btn btn-primary" type="submit">
-            Login
+            Iniciar Sesión
           </button>
         </div>
       </div>

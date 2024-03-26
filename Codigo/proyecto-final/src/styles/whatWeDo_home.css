@@ -1,0 +1,133 @@
+@keyframes slide-in {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-in {
+  animation: slide-in 0.5s ease forwards;
+}
+
+div.contenedor_whatWeDo {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.seccion_intro {
+  margin-top: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.seccion_intro > h3 {
+  color: rgb(103, 103, 112);
+  font-size: 30px;
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: 5px;
+}
+
+.seccion_intro > p {
+  color: rgb(142, 142, 156);
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+.seccion_bloques {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.bloques {
+  background-color: white;
+  visibility: hidden;
+  opacity: 0;
+  display: flex;
+  flex: 1 1 auto;
+  max-width: 20rem;
+  min-width: 200px;
+  flex-basis: 20%;
+  height: auto;
+  flex-flow: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid lightblue;
+  height: auto;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.visible {
+  visibility: visible;
+  animation: slideUp 0.3s ease-in-out forwards;
+}
+
+.bloques:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.bloques:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.bloques:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.bloques > h5 {
+  letter-spacing: 0.5rem;
+  text-wrap: wrap;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  color: rgb(103, 103, 112);
+  font-size: clamp(14px, 2vw, 20px);
+  line-height: 30px;
+  font-weight: 300;
+  letter-spacing: 7px;
+}
+
+.bloques > p {
+  font-size: clamp(12px, 2vw, 14px);
+  line-height: 25px;
+  font-weight: 300;
+  color: rgb(106, 133, 156);
+}
+
+.bloques > img {
+  display: block;
+  width: 100px;
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  border-style: solid;
+  border-width: 10px;
+  border-color: white;
+  border-radius: 50%;
+  background-color: rgb(105, 185, 255);
+  box-shadow: rgb(46, 157, 255) 0px 0px 0px 1px;
+}
