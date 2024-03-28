@@ -1,6 +1,6 @@
 import img_innovacion from "../assets/img/img_innovacion.jpg";
 import img_seguridad from "../assets/img/img_seguridad.jpg";
-import "../styles/compromisoHome.module.css";
+import "../styles/compromisoHome.css";
 export const Compromiso = () => {
   return (
     <div className="container-fluid contenedor_compromiso">

@@ -1,5 +1,5 @@
 import video from "../assets/video/AI_video.mp4";
-import "../styles/headerHome.module.css";
+import "../styles/headerHome.css";
 
 export const Header = () => {
   return (

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import "../styles/whatWeDoHome.module.css";
+import "../styles/whatWeDoHome.css";
 import { useState, useEffect, useRef } from "react";
 import arrowsIcon from "../assets/img/icon_arrowsWhatWeDo.svg";
 import relojIcon from "../assets/img/icon_relojWhatWeDo.svg";

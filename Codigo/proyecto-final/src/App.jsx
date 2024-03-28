@@ -3,6 +3,7 @@ import { Home } from "./pages/Home";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { SobreNosotros } from "./pages/SobreNosotros";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 export const App = () => {
   return (
@@ -13,6 +14,7 @@ export const App = () => {
         <Route path="/sobre-nosotros" element={<SobreNosotros />}></Route>
         <Route path="/*" element={<Navigate to="/" />}></Route>
       </Routes>
+      <ScrollToTop></ScrollToTop>
       <Footer></Footer>
     </>
   );
