@@ -6,7 +6,7 @@ export const ScrollToTop = () => {
 
   // Función para detectar el scroll del usuario
   const toggleVisibility = () => {
-    setIsVisible(window.scrollY > 200);
+    setIsVisible(window.scrollY > 100);
   };
 
   // Función para subir al inicio de la página

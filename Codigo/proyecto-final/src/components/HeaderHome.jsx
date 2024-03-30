@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
 import video from "../assets/video/AI_video.mp4";
 import "../styles/headerHome.css";
 
-export const Header = () => {
+export const HeaderHome = () => {
   return (
     <div className="container-fluid contenedor">
       <video loop autoPlay muted className="contenedor_video container-fluid">
@@ -12,12 +13,12 @@ export const Header = () => {
         <h1>THE BUSSINESS JOURNEY</h1>
         <h3>LA INTELIGENCIA QUE IMPULSA NEGOCIOS: AVANZA CON IA.</h3>
         <div className="botones_header">
-          <button type="button" className="btn btn-primary">
+          <Link to="/register" className="btn btn-primary">
             REGISTRARSE
-          </button>
-          <button type="button" className="btn btn-outline-light">
+          </Link>
+          <Link to="/sobre-nosotros" className="btn btn-outline-light ver_mas">
             VER MÁS
-          </button>
+          </Link>
         </div>
       </div>
     </div>

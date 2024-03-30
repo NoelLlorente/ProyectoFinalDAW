@@ -1,5 +1,5 @@
 import logo from "../assets/img/logo.png";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../styles/navbar.css";
 
 export const Navbar = () => {
@@ -37,7 +37,7 @@ export const Navbar = () => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="#" className="nav-link">
+              <NavLink to="/contacto" className="nav-link">
                 Contacto
               </NavLink>
             </li>
@@ -47,9 +47,9 @@ export const Navbar = () => {
               </NavLink>
             </li>
           </ul>
-          <button className="btn btn-primary" type="submit">
+          <Link className="btn btn-primary" to="/login">
             Iniciar Sesión
-          </button>
+          </Link>
         </div>
       </div>
     </nav>

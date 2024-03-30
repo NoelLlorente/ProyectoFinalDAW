@@ -1,11 +1,11 @@
 import { Compromiso } from "../components/Compromiso";
-import { Header } from "../components/Header";
+import { HeaderHome } from "../components/HeaderHome";
 
 import { WhatWeDo } from "../components/WhatWeDo";
 export const Home = () => {
   return (
     <>
-      <Header></Header>
+      <HeaderHome></HeaderHome>
       <WhatWeDo></WhatWeDo>
       <Compromiso></Compromiso>
     </>

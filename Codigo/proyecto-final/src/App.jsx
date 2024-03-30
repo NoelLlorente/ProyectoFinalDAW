@@ -4,6 +4,9 @@ import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { SobreNosotros } from "./pages/SobreNosotros";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { Contacto } from "./pages/Contacto";
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
 
 export const App = () => {
   return (
@@ -12,6 +15,9 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/sobre-nosotros" element={<SobreNosotros />}></Route>
+        <Route path="/contacto" element={<Contacto />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/register" element={<Register />}></Route>
         <Route path="/*" element={<Navigate to="/" />}></Route>
       </Routes>
       <ScrollToTop></ScrollToTop>
