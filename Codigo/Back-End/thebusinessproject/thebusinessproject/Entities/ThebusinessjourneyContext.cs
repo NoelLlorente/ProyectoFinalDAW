@@ -19,6 +19,8 @@ public partial class ThebusinessjourneyContext : DbContext
 
     public virtual DbSet<Post> Posts { get; set; }
 
+    public virtual DbSet<ResultadoConsultum> ResultadoConsulta { get; set; }
+
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     public virtual DbSet<UsuarioConsultum> UsuarioConsulta { get; set; }
@@ -39,11 +41,17 @@ public partial class ThebusinessjourneyContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Descripcion)
-                .HasMaxLength(10000)
+                .HasMaxLength(255)
                 .HasColumnName("descripcion");
             entity.Property(e => e.Fecha)
                 .HasColumnType("datetime")
                 .HasColumnName("fecha");
+            entity.Property(e => e.Presupuesto)
+                .HasPrecision(10)
+                .HasColumnName("presupuesto");
+            entity.Property(e => e.Tipo)
+                .HasMaxLength(10)
+                .HasColumnName("tipo");
         });
 
         modelBuilder.Entity<Post>(entity =>
@@ -61,6 +69,31 @@ public partial class ThebusinessjourneyContext : DbContext
                 .HasColumnName("fecha");
         });
 
+        modelBuilder.Entity<ResultadoConsultum>(entity =>
+        {
+            entity.HasKey(e => e.IdresultadoConsulta).HasName("PRIMARY");
+
+            entity.ToTable("resultado_consulta");
+
+            entity.HasIndex(e => e.Idconsulta, "consulta_idx");
+
+            entity.Property(e => e.IdresultadoConsulta).HasColumnName("idresultado_consulta");
+            entity.Property(e => e.Idconsulta).HasColumnName("idconsulta");
+            entity.Property(e => e.Pasos)
+                .HasMaxLength(255)
+                .HasColumnName("pasos");
+            entity.Property(e => e.PresupuestoEstimado)
+                .HasMaxLength(255)
+                .HasColumnName("presupuestoEstimado");
+            entity.Property(e => e.Probabilidad)
+                .HasMaxLength(255)
+                .HasColumnName("probabilidad");
+
+            entity.HasOne(d => d.IdconsultaNavigation).WithMany(p => p.ResultadoConsulta)
+                .HasForeignKey(d => d.Idconsulta)
+                .HasConstraintName("consulta");
+        });
+
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.Correo).HasName("PRIMARY");
@@ -72,15 +105,9 @@ public partial class ThebusinessjourneyContext : DbContext
             entity.Property(e => e.Correo)
                 .HasMaxLength(50)
                 .HasColumnName("correo");
-            entity.Property(e => e.Contraseña)
-                .HasMaxLength(100)
-                .HasColumnName("contraseña");
             entity.Property(e => e.Fecha)
                 .HasColumnType("datetime")
                 .HasColumnName("fecha");
-            entity.Property(e => e.Nombre)
-                .HasMaxLength(80)
-                .HasColumnName("nombre");
         });
 
         modelBuilder.Entity<UsuarioConsultum>(entity =>

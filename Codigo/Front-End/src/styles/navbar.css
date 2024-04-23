@@ -22,7 +22,67 @@ nav {
 .nav-link:focus {
   color: #0082f3 !important;
 }
+.nav-link {
+  display: block;
+  text-align: center;
+}
 
 .navbar-toggler:focus {
   box-shadow: none !important;
+}
+
+.loginButton {
+  color: white !important;
+}
+
+.loginButton:hover {
+  color: darkgray !important;
+}
+
+div.dropdown {
+  margin-right: 1rem;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+button.dropdown-toggle.perfil-icono {
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  padding: 0;
+}
+
+ul.dropdown-menu.show {
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+  position: absolute;
+  width: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  --mdb-dropdown-min-width: none;
+}
+
+a.dropdown-item {
+  text-align: center;
+}
+
+.perfil-icono.dropdown-toggle::after {
+  display: none;
+}
+
+@media all and (max-width: 992px) {
+  .navbar-collapse {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  .navbar-nav.me-auto {
+    justify-content: center;
+    align-items: center;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
 }

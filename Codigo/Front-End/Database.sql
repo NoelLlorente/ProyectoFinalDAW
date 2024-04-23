@@ -26,7 +26,9 @@ DROP TABLE IF EXISTS `consulta`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `consulta` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(10000) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
+  `presupuesto` decimal(10,0) NOT NULL,
+  `tipo` varchar(10) NOT NULL,
   `fecha` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -38,7 +40,6 @@ CREATE TABLE `consulta` (
 
 LOCK TABLES `consulta` WRITE;
 /*!40000 ALTER TABLE `consulta` DISABLE KEYS */;
-INSERT INTO `consulta` VALUES (1,'sad','2024-04-11 00:00:00'),(2,'pruebas','2024-04-11 00:00:00'),(3,'prueba','2024-04-11 00:00:00'),(4,'segunda consulta','2024-04-11 00:00:00'),(5,'tercera','2024-04-11 00:00:00');
 /*!40000 ALTER TABLE `consulta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,6 +68,34 @@ LOCK TABLES `post` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `resultado_consulta`
+--
+
+DROP TABLE IF EXISTS `resultado_consulta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `resultado_consulta` (
+  `idresultado_consulta` int NOT NULL AUTO_INCREMENT,
+  `pasos` varchar(255) NOT NULL,
+  `presupuestoEstimado` varchar(255) NOT NULL,
+  `probabilidad` varchar(255) NOT NULL,
+  `idconsulta` int NOT NULL,
+  PRIMARY KEY (`idresultado_consulta`),
+  UNIQUE KEY `idconsulta_UNIQUE` (`idconsulta`),
+  CONSTRAINT `idconsulta` FOREIGN KEY (`idconsulta`) REFERENCES `consulta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resultado_consulta`
+--
+
+LOCK TABLES `resultado_consulta` WRITE;
+/*!40000 ALTER TABLE `resultado_consulta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `resultado_consulta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuario`
 --
 
@@ -75,8 +104,6 @@ DROP TABLE IF EXISTS `usuario`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
   `correo` varchar(50) NOT NULL,
-  `nombre` varchar(80) NOT NULL,
-  `contraseña` varchar(100) NOT NULL,
   `fecha` datetime NOT NULL,
   PRIMARY KEY (`correo`),
   UNIQUE KEY `correo_UNIQUE` (`correo`)
@@ -89,7 +116,6 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('pepe@gmail.com','Pepe Martinez','1234','2024-04-08 00:00:00');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +143,6 @@ CREATE TABLE `usuario_consulta` (
 
 LOCK TABLES `usuario_consulta` WRITE;
 /*!40000 ALTER TABLE `usuario_consulta` DISABLE KEYS */;
-INSERT INTO `usuario_consulta` VALUES ('pepe@gmail.com',1),('pepe@gmail.com',4),('pepe@gmail.com',5);
 /*!40000 ALTER TABLE `usuario_consulta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,4 +182,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-11 18:56:38
+-- Dump completed on 2024-04-22 18:33:43

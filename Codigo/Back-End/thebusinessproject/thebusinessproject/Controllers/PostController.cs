@@ -104,7 +104,7 @@ namespace thebusinessproject.Controllers
             }
         }
 
-        [HttpGet("crearPost")]
+        [HttpPost("crearPost")]
         public async Task<ActionResult<bool>> CrearConsulta(string correo, string descripcion, DateTime fecha)
         {
             try

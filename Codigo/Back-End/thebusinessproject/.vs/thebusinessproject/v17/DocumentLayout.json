@@ -1,54 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Noel\\source\\repos\\thebusinessproject\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{650FEE31-02AB-4472-9827-EE62498044D8}|thebusinessproject\\thebusinessproject.csproj|c:\\users\\noel\\source\\repos\\thebusinessproject\\thebusinessproject\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{650FEE31-02AB-4472-9827-EE62498044D8}|thebusinessproject\\thebusinessproject.csproj|solutionrelative:thebusinessproject\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{650FEE31-02AB-4472-9827-EE62498044D8}|thebusinessproject\\thebusinessproject.csproj|c:\\users\\noel\\source\\repos\\thebusinessproject\\thebusinessproject\\controllers\\consultumcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{650FEE31-02AB-4472-9827-EE62498044D8}|thebusinessproject\\thebusinessproject.csproj|solutionrelative:thebusinessproject\\controllers\\consultumcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PostController.cs",
-              "DocumentMoniker": "C:\\Users\\Noel\\source\\repos\\thebusinessproject\\thebusinessproject\\Controllers\\PostController.cs",
-              "RelativeDocumentMoniker": "thebusinessproject\\Controllers\\PostController.cs",
-              "ToolTip": "C:\\Users\\Noel\\source\\repos\\thebusinessproject\\thebusinessproject\\Controllers\\PostController.cs",
-              "RelativeToolTip": "thebusinessproject\\Controllers\\PostController.cs",
-              "ViewState": "AQIAAGUAAAAAAAAAAAAIwHYAAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-11T17:04:28.27Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ConsultumController.cs",
-              "DocumentMoniker": "C:\\Users\\Noel\\source\\repos\\thebusinessproject\\thebusinessproject\\Controllers\\ConsultumController.cs",
-              "RelativeDocumentMoniker": "thebusinessproject\\Controllers\\ConsultumController.cs",
-              "ToolTip": "C:\\Users\\Noel\\source\\repos\\thebusinessproject\\thebusinessproject\\Controllers\\ConsultumController.cs",
-              "RelativeToolTip": "thebusinessproject\\Controllers\\ConsultumController.cs",
-              "ViewState": "AQIAAIAAAAAAAAAAAAAIwIwAAAARAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-11T16:34:25.092Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

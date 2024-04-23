@@ -19,36 +19,35 @@ namespace thebusinessproject.Controllers
             _DBContext = DBContext;
         }
 
-        [HttpGet("getUsuarios")]
-        public async Task<ActionResult<List<UsuarioDTO>>> GetUsuarios()
-        {
-            var lista = await _DBContext.Usuarios.Select(
-                s => new UsuarioDTO
-                {
-                    Correo = s.Correo,
-                    Nombre = s.Nombre,
-                    Contraseña = s.Contraseña,
-                    Fecha = s.Fecha,
-                }
-            ).ToListAsync();
+        //[HttpGet("getUsuarios")]
+        //public async Task<ActionResult<List<UsuarioDTO>>> GetUsuarios()
+        //{
+        //    var lista = await _DBContext.Usuarios.Select(
+        //        s => new UsuarioDTO
+        //        {
+        //            Correo = s.Correo,
 
-            if (lista.Count < 0)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return lista;
-            }
-        }
+        //            Fecha = s.Fecha,
+        //        }
+        //    ).ToListAsync();
+
+        //    if (lista.Count < 0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    else
+        //    {
+        //        return lista;
+        //    }
+        //}
 
         [HttpGet("validarUsuario")]
-        public async Task<ActionResult<bool>> ValidarUsuario(string correo, string password)
+        public async Task<ActionResult<bool>> ValidarUsuario([FromQuery] string correo)
         {
             try
             {
                 var usuarioEncontrado = await _DBContext.Usuarios
-                    .AnyAsync(s => s.Correo == correo && s.Contraseña == password);
+                    .AnyAsync(s => s.Correo == correo);
 
                 return usuarioEncontrado;
             }
@@ -59,28 +58,25 @@ namespace thebusinessproject.Controllers
             }
         }
 
-        [HttpPost("crearUsuario")]
-        public async Task<ActionResult<bool>> InsertUser(string correo, string nombre, string pass, DateTime fecha)
+        [HttpPost("guardarUsuario")]
+        public async Task<ActionResult<bool>> InsertUser([FromBody] UsuarioDTO usuario)
         {
             try
             {
-                var existeUsuario = _DBContext.Usuarios.FirstOrDefaultAsync(u => u.Correo == correo);
-
-                if (existeUsuario.Result == null)
+                var newUser = new Usuario()
                 {
-                    var newUser = new Usuario()
-                    {
-                        Correo = correo,
-                        Nombre = nombre,
-                        Contraseña = pass,
-                        Fecha = fecha,
-                    };
+                    Correo = usuario.Correo,
+                    Fecha = usuario.Fecha,
+                };
 
-                    _DBContext.Usuarios.Add(newUser);
-                    await _DBContext.SaveChangesAsync();
+                _DBContext.Usuarios.Add(newUser);
+                await _DBContext.SaveChangesAsync();
+                var usuarioEncontrado = await _DBContext.Usuarios
+                .AnyAsync(s => s.Correo == usuario.Correo);
+                if (usuarioEncontrado)
+                {
                     return true;
                 }
-
                 return false;
             }
             catch (Exception ex)
