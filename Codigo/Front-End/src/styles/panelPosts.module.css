@@ -1,0 +1,28 @@
+.contenedor_panelPost {
+  background-color: rgba(20, 20, 20, 0.966);
+  padding: 1rem;
+  color: white;
+  width: 40vw;
+  height: 25vh;
+  border-radius: 10px;
+  margin-top: 1rem;
+  display: flex;
+  flex-flow: column;
+  box-shadow: rgba(255, 255, 255, 0.705) 0px 3px 8px;
+}
+
+.contenedor_panelPost > h4 {
+  text-transform: uppercase;
+  font-size: clamp(0.5em, 5vw, 1em);
+}
+
+.contenedor_panelPost > p:nth-of-type(1) {
+  margin-top: 1rem;
+  font-size: clamp(0.7em, 5vw, 0.9em);
+}
+
+.contenedor_panelPost > p:last-child {
+  align-self: flex-end;
+  margin-top: auto;
+  font-size: 0.8em;
+}

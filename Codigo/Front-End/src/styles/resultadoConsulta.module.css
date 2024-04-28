@@ -1,0 +1,18 @@
+.contenedor_resultado {
+  position: relative;
+  height: 100%;
+  padding: 2rem 2rem;
+  overflow: scroll;
+  color: white;
+}
+
+.contenedor_resultado::-webkit-scrollbar {
+  display: none;
+}
+.contenedor_resultado > ol li {
+  list-style: decimal;
+}
+
+.contenedor_resultado > ul li {
+  list-style: circle;
+}

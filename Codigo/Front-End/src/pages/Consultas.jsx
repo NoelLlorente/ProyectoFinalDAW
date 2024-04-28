@@ -3,87 +3,30 @@ import { FormConsultas } from "../components/FormConsultas";
 import { ResultadoConsulta } from "../components/ResultadoConsulta";
 import { Sidebar } from "../components/Sidebar";
 import estilos from "../styles/consultas.module.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdMenu } from "react-icons/md";
-import axios from "axios";
-import { getDate } from "../Tools/getDate";
+import { ConsultaContext } from "../context/ConsultaContext";
 
-export const Consultas = ({ user }) => {
+export const Consultas = () => {
   const [displayBtn, setDisplayBtn] = useState(false);
   const [showSidebar, setShowSidebar] = useState(true);
-  const [detail, setDetail] = useState(null);
-  const [crearClicked, setCrearClicked] = useState(false);
+  const [consulta, setConsulta] = useState(null);
   const [mostrarResultado, setMostrarResultado] = useState(false);
-  const [consultas_resultados, setConsultas_resultados] = useState([]);
   const [widthSurpassed, setWidthSurpassed] = useState(
-    window.innerWidth < 1330
+    window.innerWidth < 1870
   );
+  const {
+    listaConsultas,
+    agregarConsulta,
+    eliminarConsulta,
+    eliminarConsultas,
+    agregarConsultaResultado,
+  } = useContext(ConsultaContext);
 
   const handleConsultaClick = (consulta) => {
-    setDetail(consulta);
-    console.log(consulta);
-    setCrearClicked(false);
+    setConsulta(consulta);
     setMostrarResultado(true);
   };
-
-  const handleEliminarConsultaClick = (idConsulta) => {
-    axios
-      .get(
-        `https://localhost:7296/api/Consultum/eliminarConsulta?correo=${user.email}&idConsulta=${idConsulta}`
-      )
-      .then((response) => {
-        if (response.data) {
-          setConsultas_resultados((prevConsultas) =>
-            prevConsultas.filter((consulta) => consulta.id !== idConsulta)
-          );
-          if (detail && detail.id === idConsulta) {
-            setDetail(null);
-            setMostrarResultado(false);
-          }
-        }
-      })
-      .catch((error) => {
-        console.error("Error eliminando consulta: ", error);
-      });
-  };
-
-  const handleCrearConsulta = (consulta) => {
-    axios
-      .post(
-        `https://localhost:7296/api/Consultum/crearConsulta?correo=${user.email}`,
-        {
-          descripcion: consulta.descripcion,
-          presupuesto: consulta.presupuesto,
-          tipo: consulta.tipo,
-          fecha: getDate(),
-        }
-      )
-      .then((response) => {
-        setConsultas_resultados((prevConsultas) => [
-          ...prevConsultas,
-          response.data,
-        ]);
-        setDetail(response.data);
-        console.log(response.data);
-        setMostrarResultado(true);
-      })
-      .catch((error) => {
-        console.error("Error creando consulta: ", error);
-      });
-  };
-
-  useEffect(() => {
-    axios
-      .get(
-        `https://localhost:7296/api/Consultum/getConsultasYResultadosUsuario?correo=${user.email}`
-      )
-      .then((response) => {
-        setConsultas_resultados(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching consultas y resultados: ", error);
-      });
-  }, [user]);
 
   const handleSidebarClick = () => {
     setShowSidebar(true);
@@ -92,7 +35,7 @@ export const Consultas = ({ user }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1330) {
+      if (window.innerWidth < 1870) {
         setWidthSurpassed(true);
         setDisplayBtn(true);
         setShowSidebar(false);
@@ -125,26 +68,29 @@ export const Consultas = ({ user }) => {
         setDisplayBtn={setDisplayBtn}
         setShowSidebar={setShowSidebar}
         handleConsultaClick={handleConsultaClick}
-        consultas_resultados={consultas_resultados}
-        setCrearClicked={setCrearClicked}
+        listaConsultas={listaConsultas}
+        eliminarConsulta={eliminarConsulta}
         setMostrarResultado={setMostrarResultado}
-        handleEliminarConsultaClick={handleEliminarConsultaClick}
+        eliminarConsultas={eliminarConsultas}
       />
       <main className={estilos.main}>
-        {crearClicked && !mostrarResultado && (
-          <FormConsultas onSubmit={handleCrearConsulta} user={user} />
+        {!mostrarResultado && (
+          <FormConsultas
+            agregarConsulta={agregarConsulta}
+            setMostrarResultado={setMostrarResultado}
+            setConsulta={setConsulta}
+            agregarConsultaResultado={agregarConsultaResultado}
+          />
         )}
 
-        {detail &&
+        {consulta &&
           mostrarResultado &&
-          consultas_resultados.find(
-            (consulta) => consulta.id === detail.id
-          ) && (
-            <ResultadoConsulta
-              consulta={detail}
-              setConsultas_resultados={setConsultas_resultados}
-            />
-          )}
+          (() => {
+            const consul = listaConsultas.find(
+              (consul) => consul.id === consulta.id
+            );
+            return consul && <ResultadoConsulta consulta={consul} />;
+          })()}
       </main>
     </div>
   );

@@ -7,11 +7,11 @@ export const Sidebar = ({
   setShowSidebar,
   setDisplayBtn,
   widthSurpassed,
-  consultas_resultados,
+  listaConsultas,
   handleConsultaClick,
-  setCrearClicked,
   setMostrarResultado,
-  handleEliminarConsultaClick,
+  eliminarConsulta,
+  eliminarConsultas,
 }) => {
   const handleClickMenuBtn = () => {
     setShowSidebar(false);
@@ -19,10 +19,12 @@ export const Sidebar = ({
   };
 
   const handleClickCrear = () => {
-    setCrearClicked(true);
     setMostrarResultado(false);
   };
 
+  const handleClickEliminarTodos = () => {
+    eliminarConsultas();
+  };
   return (
     <div
       className={`${estilos.contenedor_sidebar} ${
@@ -43,19 +45,19 @@ export const Sidebar = ({
         <button className={`btn btn-primary`} onClick={handleClickCrear}>
           Crear
         </button>
-        <button className={`btn btn-danger`}>Eliminar Todos</button>
+        <button className={`btn btn-danger`} onClick={handleClickEliminarTodos}>
+          Eliminar Todos
+        </button>
       </div>
       <div className={estilos.consultas}>
-        {consultas_resultados &&
-          consultas_resultados.length > 0 &&
-          consultas_resultados.map((consulta, index) => (
+        {listaConsultas &&
+          listaConsultas.length > 0 &&
+          listaConsultas.map((consulta, index) => (
             <EntradaConsulta
               key={index}
               descripcion={consulta.descripcion}
               onClick={() => handleConsultaClick(consulta)}
-              handleEliminarConsultaClick={() =>
-                handleEliminarConsultaClick(consulta.id)
-              }
+              eliminarConsulta={() => eliminarConsulta(consulta.id)}
             />
           ))}
       </div>

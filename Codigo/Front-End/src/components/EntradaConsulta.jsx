@@ -5,14 +5,17 @@ export const EntradaConsulta = ({
   descripcion,
   index,
   onClick,
-  handleEliminarConsultaClick,
+  eliminarConsulta,
 }) => {
+  if (descripcion.length > 25) {
+    descripcion = descripcion.substring(0, 25) + "...";
+  }
   return (
     <>
       <p key={index} onClick={onClick}>
         <FiMessageSquare />
         {descripcion}
-        <FaRegTrashAlt onClick={handleEliminarConsultaClick} />
+        <FaRegTrashAlt onClick={eliminarConsulta} />
       </p>
     </>
   );

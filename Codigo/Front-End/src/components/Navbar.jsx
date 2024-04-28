@@ -46,17 +46,19 @@ export const Navbar = ({ isAuthenticated, logout, user, isLoading }) => {
                 Contacto
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink to="#" className="nav-link">
-                Blog
-              </NavLink>
-            </li>
             {isAuthenticated ? (
-              <li className="nav-item">
-                <NavLink to="/consultas" className="nav-link">
-                  Consultas
-                </NavLink>
-              </li>
+              <>
+                <li className="nav-item">
+                  <NavLink to="/blog" className="nav-link">
+                    Blog
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/consultas" className="nav-link">
+                    Consultas
+                  </NavLink>
+                </li>
+              </>
             ) : null}
           </ul>
 
