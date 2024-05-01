@@ -1,0 +1,1 @@
+search_result['54']=["topic_000000000000001D.html","ConsultaDTO.ResultadoConsulta Property","Es una referencia al DTO ResultadoConsultaDTO porque cada consulta tiene su resultado, y resultado es un objeto con varios campos."];

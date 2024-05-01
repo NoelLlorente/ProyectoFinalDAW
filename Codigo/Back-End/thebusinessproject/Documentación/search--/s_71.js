@@ -1,0 +1,1 @@
+search_result['71']=["topic_0000000000000024.html","ResultadoConsultaDTO.IdresultadoConsulta Property","Es el id autoincremental que se asigna cuando se crea un resultado para una consulta en la db."];

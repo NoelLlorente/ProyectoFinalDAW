@@ -1,0 +1,1 @@
+search_result['52']=["topic_000000000000001B.html","ConsultaDTO.Tipo Property","Es el tipo de consulta, hay dos tipos online y físico."];

@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"thebusinessproject Reference","topic_0000000000000057.html"],['30',"thebusinessproject.DTO Namespace","topic_0000000000000016.html"],['39',"PostDTO Class","topic_000000000000001E.html"],['40',"Properties","topic_000000000000001E_props--.html"],['42',"Fecha Property","topic_0000000000000021.html"]];

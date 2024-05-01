@@ -1,0 +1,1 @@
+search_result['74']=["topic_0000000000000027.html","UsuarioDTO Class","Representa un objeto de transferencia de datos para la entidad Usuario."];

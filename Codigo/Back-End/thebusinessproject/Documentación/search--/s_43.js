@@ -1,0 +1,1 @@
+search_result['43']=["topic_0000000000000017.html","ConsultaDTO Class","Representa un objeto de transeferencia de datos para la entidad Consultum."];

@@ -1,0 +1,1 @@
+search_result['106']=["topic_0000000000000038.html","ResultadoConsultum Class","Representa un conductor en la base de datos. Tiene relación con la tabla consulta de la db."];

@@ -1,0 +1,1 @@
+search_result['73']=["topic_0000000000000026.html","ResultadoConsultaDTO.Idconsulta Property","Es el id de la consulta, osea cada resultado pertenece a una consulta."];

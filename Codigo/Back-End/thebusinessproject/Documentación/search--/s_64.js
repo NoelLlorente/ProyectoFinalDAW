@@ -1,0 +1,1 @@
+search_result['64']=["topic_0000000000000022.html","PostDTO.Usuario Property","Es el correo del usuario que creo el post."];

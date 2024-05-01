@@ -1,0 +1,1 @@
+search_result['114']=["topic_000000000000003B.html","ResultadoConsultum.Idconsulta Property","Es el id de la consulta a la que pertenece este resultado."];

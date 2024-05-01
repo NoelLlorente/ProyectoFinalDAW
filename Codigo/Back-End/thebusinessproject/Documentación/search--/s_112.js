@@ -1,0 +1,1 @@
+search_result['112']=["topic_0000000000000039.html","ResultadoConsultum.IdresultadoConsulta Property","Es el id de cada resultado de consulta, es autoincremental"];

@@ -1,0 +1,1 @@
+search_result['115']=["topic_000000000000003C.html","ResultadoConsultum.IdconsultaNavigation Property","Es una referencia a la tabla de la db Consulta, obviamente esto porque un resultado es de una consulta."];

@@ -1,0 +1,1 @@
+search_result['20']=["topic_000000000000000A.html","PostController.GetPostUsuario Method","Método para obtener los posts de un usuario específico."];

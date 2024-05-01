@@ -1,0 +1,1 @@
+search_result['94']=["topic_0000000000000031.html","Consultum.ResultadoConsultum Property","Es una referencia hacia la tabla resultado_consulta de la db, básicamente en esa tabla tendremos los resultados de cada consulta."];

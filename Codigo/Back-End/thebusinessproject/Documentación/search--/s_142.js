@@ -1,0 +1,1 @@
+search_result['142']=["topic_000000000000004B.html","Usuario.UsuarioConsulta Property","Es una referencia a la tabla de la db usuario_consulta que contiene el correo e id de la consulta."];

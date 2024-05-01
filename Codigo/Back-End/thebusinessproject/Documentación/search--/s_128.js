@@ -1,0 +1,1 @@
+search_result['128']=["topic_0000000000000042.html","ThebusinessjourneyContext.ResultadoConsulta Property","Representa la tabla \u0027resultado_consulta\u0027 en la base de datos."];

@@ -1,0 +1,1 @@
+search_result['140']=["topic_0000000000000049.html","Usuario.Correo Property","Es el campo primario en la db, es el correo del usuario"];

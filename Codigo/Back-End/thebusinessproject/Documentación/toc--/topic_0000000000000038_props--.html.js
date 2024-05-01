@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"thebusinessproject Reference","topic_0000000000000057.html"],['54',"thebusinessproject.Entities Namespace","topic_000000000000002A.html"],['70',"ResultadoConsultum Class","topic_0000000000000038.html"],['71',"Properties","topic_0000000000000038_props--.html"]];

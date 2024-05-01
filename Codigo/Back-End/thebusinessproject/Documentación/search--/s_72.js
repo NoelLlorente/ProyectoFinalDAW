@@ -1,0 +1,1 @@
+search_result['72']=["topic_0000000000000025.html","ResultadoConsultaDTO.Resultado Property","Es la descripción que se obtiene de una consulta osea una ia generará un resultado que será un texto pues ese texto será el resultado."];

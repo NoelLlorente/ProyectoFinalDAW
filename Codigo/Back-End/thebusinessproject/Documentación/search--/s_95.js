@@ -1,0 +1,1 @@
+search_result['95']=["topic_0000000000000032.html","Consultum.UsuarioConsultum Property","Es una referencia a la tabla usuario_consulta de la base de datos, esto es porque un usuario puede tener una o varias consultas."];

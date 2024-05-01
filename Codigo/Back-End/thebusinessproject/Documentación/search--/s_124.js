@@ -1,0 +1,1 @@
+search_result['124']=["topic_000000000000003F.html","ThebusinessjourneyContext(DbContextOptions\u0026lt;ThebusinessjourneyContext\u0026gt;) Constructor","Constructor que acepta opciones para la configuración del contexto de la base de datos."];

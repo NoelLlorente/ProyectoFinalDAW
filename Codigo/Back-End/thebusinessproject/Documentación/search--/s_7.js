@@ -1,0 +1,1 @@
+search_result['7']=["topic_0000000000000002.html","ConsultumController Constructor","Constructor que inicializa el contexto de la base de datos."];

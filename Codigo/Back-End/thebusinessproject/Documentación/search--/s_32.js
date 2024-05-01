@@ -1,0 +1,1 @@
+search_result['32']=["topic_0000000000000011.html","ResultadoConsultumController.CrearConsulta Method","Método para crear un resultado para una consulta."];

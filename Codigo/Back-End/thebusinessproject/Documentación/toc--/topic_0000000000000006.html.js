@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"thebusinessproject Reference","topic_0000000000000057.html"],['4',"thebusinessproject.Controllers Namespace","topic_0000000000000000.html"],['5',"ConsultumController Class","topic_0000000000000001.html"],['7',"Methods","topic_0000000000000001_methods--.html"],['8',"ConsultasYResultadosUsuario Method","topic_0000000000000006.html"]];
