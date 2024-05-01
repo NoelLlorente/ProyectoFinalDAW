@@ -1,5 +1,13 @@
 import estilos from "../styles/header.module.css";
 
+/**
+ * Este componente HeaderContacto es el header de la vista Contacto.
+ * Se muestra un mensaje indicando que pueden contactarnos a través del formulario
+ * @memberof Contacto
+ * @function HeaderContacto
+ * @component
+ * @returns {JSX.Element} Retorna el componente renderizado
+ */
 export const HeaderContacto = () => {
   return (
     <div className={`container-fluid ${estilos.header} ${estilos.contacto}`}>

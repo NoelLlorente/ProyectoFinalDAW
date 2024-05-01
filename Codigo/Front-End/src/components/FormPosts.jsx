@@ -1,6 +1,19 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import estilos from "../styles/formPosts.module.css";
+
+/**
+ * Este componente es el formulario que se utiliza tanto para crear posts, como para modificarles.
+ *
+ * @function FormPosts
+ * @memberof Blog
+ * @prop {function} agregarPost Es una función del Provider PostProvider, básicamente nos permite crear los post, estos se agregan a la db y al provider.
+ * @prop {setter} setPost Se utiliza para cambiar el estado del post, básicamente podriamos cambiar los datos de un post, o almacenar uno.
+ * @prop {setter} setMostrarPost Se utiliza para modificar el estado de mostrarPost. Se utiliza para establecer un boolean (true, false).
+ * @prop {Object} postAModificar Si estamos con el formulario en modo de modificar entonces este objeto contendrá los datos del post a modificar, se utilizará para rellenar el formulario.
+ * @prop {function} modificarPost Esta es una función que viene del provider, nos permitirá modificar le post tanto en el provider como en la db.
+ * @returns {JSX.Element} Se retorna el componente.
+ */
 export const FormPosts = ({
   agregarPost,
   setPost,
@@ -8,9 +21,16 @@ export const FormPosts = ({
   postAModificar,
   modificarPost,
 }) => {
+  /**
+   * Se crean dos estados o propiedades.
+   * Se utilizarán para validar el formulario y para saber si el formulario esta en modo modificar o en modo crear.
+   */
   const [descripcion, setDescripcion] = useState("");
   const [isUpdateMode, setIsUpdateMode] = useState(false);
 
+  /**
+   * Se utiliza el useEffect cada vez que cambie el postAModificar, si este contiene un objeto, entonces los inputs del form, pillarán los datos del post.
+   */
   useEffect(() => {
     if (postAModificar) {
       setDescripcion(postAModificar.descripcion);
@@ -18,6 +38,12 @@ export const FormPosts = ({
     }
   }, [postAModificar]);
 
+  /**
+   * Esta función se utiliza para crear un post, o para modificar un post.
+   * @function FormPosts_handleSubmit
+   * @param {Event} e Es el evento del formulario
+   * @returns {None} No retorna nada.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!descripcion) {
@@ -37,6 +63,9 @@ export const FormPosts = ({
     setMostrarPost(true);
   };
 
+  /**
+   * Se utiliza este useEffect para validar en tiempo real los campos del formulario.
+   */
   useEffect(() => {
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     const forms = document.querySelectorAll(".needs-validation");

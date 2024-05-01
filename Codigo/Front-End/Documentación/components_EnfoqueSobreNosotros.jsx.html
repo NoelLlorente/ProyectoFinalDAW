@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/EnfoqueSobreNosotros.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/EnfoqueSobreNosotros.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable react/prop-types */
+import { useEffect, useRef } from "react";
+import IA from "../assets/img/img_inteligenciaArtificial.jpg";
+import pasos from "../assets/img/img_pasosPracticos.webp";
+import presupuesto from "../assets/img/img_presupuesto.webp";
+import probabilidad from "../assets/img/img_probabilidad.jpg";
+
+/**
+ * Este es el componente de la sección EnfoqueSobreNosotros.
+ * Este componente se mostrará en la vista SobreNosotros.
+ * Acá se entra más en profundidad en explicar el concepto del sitio web.
+ *
+ * @prop {Object} estilos - Serán los estilos del css
+ * @function EnfoqueSobreNosotros
+ * @memberof SobreNosotros
+ * @returns {JSX.Element} El componente Renderizado
+ */
+export const EnfoqueSobreNosotros = ({ estilos }) => {
+  /**
+   * Acá nos creamos un useRef para referenciar al DOM.
+   */
+  const cardsRef = useRef([]);
+
+  /**
+   * Utilizaremos un useEffect para animar las tarjetas, threshold será el tiempo de aparición o animación.
+   * Este useEffect se volverá a correr cuando cambie la variable estilos.appear.
+   */
+  useEffect(() => {
+    const cards = cardsRef.current;
+    const appearOptions = {
+      threshold: 0.2,
+    };
+    /**
+     * Creamos el IntersectionObserver y le añadimos funcionalidad.
+     */
+    const appearOnScroll = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add(estilos.appear);
+          }, index * 200); /** Es el retraso entre la aparición de cada tarjeta */
+        }
+      });
+    }, appearOptions);
+
+    /**
+     * Hacemos que observe cada tarjeta
+     */
+    cards.forEach((card) => {
+      appearOnScroll.observe(card);
+    });
+
+    return () => appearOnScroll.disconnect();
+  }, [estilos.appear]);
+
+  /**
+   * Acá se verán se indicará el orden de aparicion, osea que tarjeta aparecerá primero.
+   * Se retorna todo el componente con el html.
+   */
+  return (
+    &lt;div className={`container-fluid ${estilos.enfoque}`}>
+      &lt;h3>Nuestro Enfoque&lt;/h3>
+      &lt;div className={estilos.contenedorEnfoques}>
+        &lt;div ref={(el) => (cardsRef.current[0] = el)} className={estilos.card}>
+          &lt;img src={IA} alt="imagen IA" />
+          &lt;h5>Inteligencia Artificial&lt;/h5>
+          &lt;p>
+            Nuestra plataforma utiliza algoritmos avanzados para analizar tus
+            ideas y proporcionarte recomendaciones específicas. No creemos en
+            soluciones genéricas, cada proyecto es único y merece una estrategia
+            personalizada.
+          &lt;/p>
+        &lt;/div>
+        &lt;div ref={(el) => (cardsRef.current[1] = el)} className={estilos.card}>
+          &lt;img src={pasos} alt="imagen pasos prácticos" />
+          &lt;h5>Pasos Prácticos&lt;/h5>
+          &lt;p>
+            ¿Cuáles son los pasos concretos para llevar a cabo tu idea? Te lo
+            diremos. Desde la planificación hasta la ejecución, te acompañaremos
+            en cada etapa.
+          &lt;/p>
+        &lt;/div>
+        &lt;div ref={(el) => (cardsRef.current[2] = el)} className={estilos.card}>
+          &lt;img src={presupuesto} alt="imagen presupuesto" />
+          &lt;h5>Presupuesto Realista&lt;/h5>
+          &lt;p>
+            Sabemos que los recursos son limitados. Te ayudaremos a estimar los
+            costos y a tomar decisiones informadas.
+          &lt;/p>
+        &lt;/div>
+        &lt;div ref={(el) => (cardsRef.current[3] = el)} className={estilos.card}>
+          &lt;img src={probabilidad} alt="imagen probabilidad" />
+          &lt;h5>Probabilidades de Éxito&lt;/h5>
+          &lt;p>
+            No te prometemos el éxito instantáneo, pero te proporcionaremos una
+            evaluación realista de las posibilidades. El viaje puede ser
+            desafiante, pero estamos aquí para apoyarte.
+          &lt;/p>
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Blog.html">Blog</a></li><li><a href="Consultas.html">Consultas</a></li><li><a href="Contacto.html">Contacto</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Home.html">Home</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="SobreNosotros.html">SobreNosotros</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EntradaConsulta">EntradaConsulta</a></li><li><a href="global.html#EntradaPost">EntradaPost</a></li><li><a href="global.html#FormConsultas_handleSubmit">FormConsultas_handleSubmit</a></li><li><a href="global.html#FormContacto_handleSubmit">FormContacto_handleSubmit</a></li><li><a href="global.html#FormPosts_handleSubmit">FormPosts_handleSubmit</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#PasswordAlerts">PasswordAlerts</a></li><li><a href="global.html#PasswordChangeForm">PasswordChangeForm</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordRequirements">PasswordRequirements</a></li><li><a href="global.html#ScrollToTop">ScrollToTop</a></li><li><a href="global.html#SidebarBlog_handleClickCrear">SidebarBlog_handleClickCrear</a></li><li><a href="global.html#SidebarBlog_handleClickEliminarTodos">SidebarBlog_handleClickEliminarTodos</a></li><li><a href="global.html#SidebarBlog_handleClickMenuBtn">SidebarBlog_handleClickMenuBtn</a></li><li><a href="global.html#SidebarBlog_handleClickMostrarTodos">SidebarBlog_handleClickMostrarTodos</a></li><li><a href="global.html#addConsultaResultado">addConsultaResultado</a></li><li><a href="global.html#changeUserPass">changeUserPass</a></li><li><a href="global.html#createConsulta">createConsulta</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#deleteConsulta">deleteConsulta</a></li><li><a href="global.html#deleteConsultas">deleteConsultas</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePosts">deletePosts</a></li><li><a href="global.html#getAIResponse">getAIResponse</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getConsultas">getConsultas</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getPostsUsuario">getPostsUsuario</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleChangePassword">handleChangePassword</a></li><li><a href="global.html#handleClickCrear">handleClickCrear</a></li><li><a href="global.html#handleClickEliminarTodos">handleClickEliminarTodos</a></li><li><a href="global.html#handleClickMenuBtn">handleClickMenuBtn</a></li><li><a href="global.html#handleClose">handleClose</a></li><li><a href="global.html#handlePasswordChange">handlePasswordChange</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#resetForm">resetForm</a></li><li><a href="global.html#updatePost">updatePost</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 01 2024 18:05:52 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

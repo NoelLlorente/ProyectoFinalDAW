@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Sidebar.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Sidebar.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable react/prop-types */
+import estilos from "../styles/sidebar.module.css";
+import { BiArrowFromRight } from "react-icons/bi";
+import { EntradaConsulta } from "./EntradaConsulta";
+
+/**
+ * Este componente es el sidebar, aca llamamos a un componente que son las entradas de las consultas (EntradaConsulta).
+ *
+ * @function Sidebar
+ * @memberof Consultas
+ * @prop {boolean} showSidebar Es un booleano que nos manda el padre para indicarnos cuando se esta mostrando la sidebar.
+ * @prop {setter} setShowSidebar Nos permite cambiar el estado de showSidebar a true o false.
+ * @prop {setter} setDisplayBtn Nos permite cambiar el estado de displayBtn, cuando mostrar el botón y cuando no.
+ * @prop {boolean} widthSurpassed Nos indica si se ha superado o no el tamaño de pantalla establecido.
+ * @prop {Object[]} listaConsultas Es un array que contiene los objetos de cada consulta, osea cada consulta es un objeto. Este array nos viene del provider ConsultasProvider.
+ * @prop {function} handleConsultaClick Es un funcion que se recibe desde el padre.
+ * @prop {setter} setMostrarResultado Permite cambiar el estado de la variable mostrarResultado. Osea cuando se muestra otro componente (ResultadoConsultas) y cuando no.
+ * @prop {function} eliminarConsulta Es una funcion que nos permite eliminar la consulta. Viene del provider ConsultasProvider.
+ * @prop {function} eliminarConsultas Es una funcion que nos permite eliminar todas las consultas. Viene del provider ConsultasProvider.
+ * @returns {JSX.Element} Se retorna el componente para ser renderizado
+ */
+export const Sidebar = ({
+  showSidebar,
+  setShowSidebar,
+  setDisplayBtn,
+  widthSurpassed,
+  listaConsultas,
+  handleConsultaClick,
+  setMostrarResultado,
+  eliminarConsulta,
+  eliminarConsultas,
+}) => {
+  /**
+   * En esta funcion se maneja el click del botón que oculta la sidebar.
+   * @function handleClickMenuBtn
+   * @returns {None} No retorna nada
+   */
+  const handleClickMenuBtn = () => {
+    setShowSidebar(false);
+    setDisplayBtn(true);
+  };
+
+  /**
+   * Se maneja el click del botón crear de la sidebar.
+   * @function handleClickCrear
+   * @returns {None} No retorna nada
+   */
+  const handleClickCrear = () => {
+    setMostrarResultado(false);
+  };
+
+  /**
+   * Se maneja el click del botón eliminar todos de la sidebar.
+   * Y se utiliza la funcion eliminarConsultas que nos traimos del provider, para eliminar todas las consultas tanto en la db como del provider.
+   * @function handleClickEliminarTodos
+   * @returns {None} No retorna nada
+   */
+  const handleClickEliminarTodos = () => {
+    eliminarConsultas();
+  };
+
+  /**
+   * Acá si tenemos consultas en listaConsultas se muestran componentes EntradaConsulta cada uno con los datos de la consulta.
+   */
+  return (
+    &lt;div
+      className={`${estilos.contenedor_sidebar} ${
+        showSidebar ? estilos.abierto : estilos.cerrado
+      }`}
+      id="contenedor_sidebar"
+    >
+      {widthSurpassed &amp;&amp; (
+        &lt;button
+          className={`${estilos.btn_cerrarSidebar}`}
+          onClick={handleClickMenuBtn}
+        >
+          &lt;BiArrowFromRight />
+        &lt;/button>
+      )}
+      &lt;h2>Consultas&lt;/h2>
+      &lt;div className={estilos.botones}>
+        &lt;button className={`btn btn-primary`} onClick={handleClickCrear}>
+          Crear
+        &lt;/button>
+        &lt;button className={`btn btn-danger`} onClick={handleClickEliminarTodos}>
+          Eliminar Todos
+        &lt;/button>
+      &lt;/div>
+      &lt;div className={estilos.consultas}>
+        {listaConsultas &amp;&amp;
+          listaConsultas.length > 0 &amp;&amp;
+          listaConsultas.map((consulta, index) => (
+            &lt;EntradaConsulta
+              key={index}
+              descripcion={consulta.descripcion}
+              onClick={() => handleConsultaClick(consulta)}
+              eliminarConsulta={() => eliminarConsulta(consulta.id)}
+            />
+          ))}
+      &lt;/div>
+    &lt;/div>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Blog.html">Blog</a></li><li><a href="Consultas.html">Consultas</a></li><li><a href="Contacto.html">Contacto</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Home.html">Home</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="SobreNosotros.html">SobreNosotros</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EntradaConsulta">EntradaConsulta</a></li><li><a href="global.html#EntradaPost">EntradaPost</a></li><li><a href="global.html#FormConsultas_handleSubmit">FormConsultas_handleSubmit</a></li><li><a href="global.html#FormContacto_handleSubmit">FormContacto_handleSubmit</a></li><li><a href="global.html#FormPosts_handleSubmit">FormPosts_handleSubmit</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#PasswordAlerts">PasswordAlerts</a></li><li><a href="global.html#PasswordChangeForm">PasswordChangeForm</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordRequirements">PasswordRequirements</a></li><li><a href="global.html#ScrollToTop">ScrollToTop</a></li><li><a href="global.html#SidebarBlog_handleClickCrear">SidebarBlog_handleClickCrear</a></li><li><a href="global.html#SidebarBlog_handleClickEliminarTodos">SidebarBlog_handleClickEliminarTodos</a></li><li><a href="global.html#SidebarBlog_handleClickMenuBtn">SidebarBlog_handleClickMenuBtn</a></li><li><a href="global.html#SidebarBlog_handleClickMostrarTodos">SidebarBlog_handleClickMostrarTodos</a></li><li><a href="global.html#addConsultaResultado">addConsultaResultado</a></li><li><a href="global.html#changeUserPass">changeUserPass</a></li><li><a href="global.html#createConsulta">createConsulta</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#deleteConsulta">deleteConsulta</a></li><li><a href="global.html#deleteConsultas">deleteConsultas</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePosts">deletePosts</a></li><li><a href="global.html#getAIResponse">getAIResponse</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getConsultas">getConsultas</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getPostsUsuario">getPostsUsuario</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleChangePassword">handleChangePassword</a></li><li><a href="global.html#handleClickCrear">handleClickCrear</a></li><li><a href="global.html#handleClickEliminarTodos">handleClickEliminarTodos</a></li><li><a href="global.html#handleClickMenuBtn">handleClickMenuBtn</a></li><li><a href="global.html#handleClose">handleClose</a></li><li><a href="global.html#handlePasswordChange">handlePasswordChange</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#resetForm">resetForm</a></li><li><a href="global.html#updatePost">updatePost</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 01 2024 18:05:52 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,5 +1,10 @@
 import "../styles/footer.css";
 
+/**
+ * Este componente será el footer del sitio web.
+ * @namespace Footer
+ * @returns {JSX.Element} Se retorna el componente para ser renderizado
+ */
 export const Footer = () => {
   return (
     <footer className="bg-body-tertiary text-center">

@@ -1,5 +1,13 @@
 import axios from "axios";
 
+/**
+ * Esta función se utiliza en el componente {@link Perfil.ChangeUserPassword} para cambiar la contraseña del usuario
+ * @function changeUserPass
+ * @param {Number} id Es el id del usuario
+ * @param {String} token Es el token que se consigue con otra función
+ * @param {String} newPass Es la nueva contraseña
+ * @returns {Promise<Object>} Se retorna la promesa con el objeto
+ */
 export const changeUserPass = async (id, token, newPass) => {
   const data = JSON.stringify({
     password: newPass,

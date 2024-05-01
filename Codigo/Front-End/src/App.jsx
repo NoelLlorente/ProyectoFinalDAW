@@ -16,9 +16,20 @@ import { ConsultaProvider } from "./context/ConsultaProvider";
 import { Blog } from "./pages/Blog";
 import { PostProvider } from "./context/PostProvider";
 
+/**
+ * Este el es componente principal se podría decir aca se crean las rutas de navegación y se llaman a todas las pages, al Navbar y al Footer.
+ * Acá se válida que el usuario que se loguea no este en la db, osea sino esta se almacena en la db. Esto se hace mediante la funcion saveUser
+ * Cabe recalcar que acá se llama a un componente que nos cuando hagamos scroll muy abajo nos permitará subir al inicio de la página. Este componente es {@link ScrollToTop}.
+ * También se llaman a los Providers, en mi caso tengos dos: {@link Consultas.ConsultaProvider} y {@link Blog.PostProvider}, como su nombre indica son proveedores de funcionalidades para la vista {@link Blog} y para la vista {@link Consultas}.
+ * @function App
+ * @returns {JSX.Element} Se retorna el componente para renderizar
+ */
 export const App = () => {
+  /**
+   * Nos traemos props de useAuth0 que es de JWT, en este useEffect se comprueba que el usuario no esta en la db, sino esta se almacena, si esta en la db no pasa nada.
+   * Este useEffect se va a ejecutar cada vez que cambie el user, y cada vez que cambie el isAuthenticated.
+   */
   const { isAuthenticated, logout, user, isLoading } = useAuth0();
-  //Guardar usuario que se loguea en database si no existe
   useEffect(() => {
     if (isAuthenticated) {
       validateUser(user)

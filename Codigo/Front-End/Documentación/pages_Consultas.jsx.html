@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/Consultas.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/Consultas.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable react/prop-types */
+import { FormConsultas } from "../components/FormConsultas";
+import { ResultadoConsulta } from "../components/ResultadoConsulta";
+import { Sidebar } from "../components/Sidebar";
+import estilos from "../styles/consultas.module.css";
+import { useContext, useEffect, useState } from "react";
+import { MdMenu } from "react-icons/md";
+import { ConsultaContext } from "../context/ConsultaContext";
+
+/**
+ * Este componente esta la vista de consultas, acá se utiliza el provider ConsultaContext (useContext), para realizar las funcionalidades necesarios.
+ * Acá se llaman a otros componentes como son el FormConsultas, ResultadoConsultas y el Sidebar.
+ * @namespace Consultas
+ * @returns {JSX.Element} Se retorna el componente para ser renderizado
+ */
+export const Consultas = () => {
+  /**
+   * Se crean los useState cada uno con su propiedad y su setter.
+   */
+  const [displayBtn, setDisplayBtn] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [consulta, setConsulta] = useState(null);
+  const [mostrarResultado, setMostrarResultado] = useState(false);
+  const [widthSurpassed, setWidthSurpassed] = useState(
+    window.innerWidth &lt; 1870
+  );
+  /**
+   * Se obtienen las funcionalidades del provider ConsultaProvider
+   */
+  const {
+    listaConsultas,
+    agregarConsulta,
+    eliminarConsulta,
+    eliminarConsultas,
+    agregarConsultaResultado,
+  } = useContext(ConsultaContext);
+
+  /**
+   * Esta función se utiliza cuando hacemos click en alguna consulta del sidebar.
+   * Se utiliza el setter de la prop consulta, para hacer que la prop obtenga los datos de la consulta cliqueada.
+   * @param {Object} consulta Es el objeto que recibe la funcion con los datos de la consulta cliqueada
+   * @returns {None} No devuelve nada
+   */
+  const handleConsultaClick = (consulta) => {
+    setConsulta(consulta);
+    setMostrarResultado(true);
+  };
+
+  /**
+   * Este función maneja que cuando hagamos click en un botón para desplegar u ocultar la sidebar utilice los setters de las props.
+   * @returns {None} No devuelve nada
+   */
+  const handleSidebarClick = () => {
+    setShowSidebar(true);
+    setDisplayBtn(false);
+  };
+
+  /**
+   * Se utiliza el useEffect para manejar cuando ocultar la sidebar según el tamaño de la ventana y cuando ocultarla.
+   * Además de cuando mostrar el botón y cuando ocultarlo
+   */
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth &lt; 1870) {
+        setWidthSurpassed(true);
+        setDisplayBtn(true);
+        setShowSidebar(false);
+      } else {
+        setWidthSurpassed(false);
+        setDisplayBtn(false);
+        setShowSidebar(true);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  /**
+   * Se retorna el componente, junto con las llamadas a otros componentes que se van a renderizar en este.
+   * Como se puede observar estos componentes reciben muchas props y setters.
+   */
+  return (
+    &lt;div className={`container-fluid ${estilos.contenedor_consultas}`}>
+      {displayBtn &amp;&amp; (
+        &lt;button
+          className={`btn btn-primary ${estilos.btn_abrirSidebar}`}
+          onClick={handleSidebarClick}
+        >
+          &lt;MdMenu />
+        &lt;/button>
+      )}
+      &lt;Sidebar
+        showSidebar={showSidebar}
+        widthSurpassed={widthSurpassed}
+        setDisplayBtn={setDisplayBtn}
+        setShowSidebar={setShowSidebar}
+        handleConsultaClick={handleConsultaClick}
+        listaConsultas={listaConsultas}
+        eliminarConsulta={eliminarConsulta}
+        setMostrarResultado={setMostrarResultado}
+        eliminarConsultas={eliminarConsultas}
+      />
+      &lt;main className={estilos.main}>
+        {!mostrarResultado &amp;&amp; (
+          &lt;FormConsultas
+            agregarConsulta={agregarConsulta}
+            setMostrarResultado={setMostrarResultado}
+            setConsulta={setConsulta}
+            agregarConsultaResultado={agregarConsultaResultado}
+          />
+        )}
+
+        {consulta &amp;&amp;
+          mostrarResultado &amp;&amp;
+          (() => {
+            const consul = listaConsultas.find(
+              (consul) => consul.id === consulta.id
+            );
+            return consul &amp;&amp; &lt;ResultadoConsulta consulta={consul} />;
+          })()}
+      &lt;/main>
+    &lt;/div>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Blog.html">Blog</a></li><li><a href="Consultas.html">Consultas</a></li><li><a href="Contacto.html">Contacto</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Home.html">Home</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="SobreNosotros.html">SobreNosotros</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EntradaConsulta">EntradaConsulta</a></li><li><a href="global.html#EntradaPost">EntradaPost</a></li><li><a href="global.html#FormConsultas_handleSubmit">FormConsultas_handleSubmit</a></li><li><a href="global.html#FormContacto_handleSubmit">FormContacto_handleSubmit</a></li><li><a href="global.html#FormPosts_handleSubmit">FormPosts_handleSubmit</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#PasswordAlerts">PasswordAlerts</a></li><li><a href="global.html#PasswordChangeForm">PasswordChangeForm</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordRequirements">PasswordRequirements</a></li><li><a href="global.html#ScrollToTop">ScrollToTop</a></li><li><a href="global.html#SidebarBlog_handleClickCrear">SidebarBlog_handleClickCrear</a></li><li><a href="global.html#SidebarBlog_handleClickEliminarTodos">SidebarBlog_handleClickEliminarTodos</a></li><li><a href="global.html#SidebarBlog_handleClickMenuBtn">SidebarBlog_handleClickMenuBtn</a></li><li><a href="global.html#SidebarBlog_handleClickMostrarTodos">SidebarBlog_handleClickMostrarTodos</a></li><li><a href="global.html#addConsultaResultado">addConsultaResultado</a></li><li><a href="global.html#changeUserPass">changeUserPass</a></li><li><a href="global.html#createConsulta">createConsulta</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#deleteConsulta">deleteConsulta</a></li><li><a href="global.html#deleteConsultas">deleteConsultas</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePosts">deletePosts</a></li><li><a href="global.html#getAIResponse">getAIResponse</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getConsultas">getConsultas</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getPostsUsuario">getPostsUsuario</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleChangePassword">handleChangePassword</a></li><li><a href="global.html#handleClickCrear">handleClickCrear</a></li><li><a href="global.html#handleClickEliminarTodos">handleClickEliminarTodos</a></li><li><a href="global.html#handleClickMenuBtn">handleClickMenuBtn</a></li><li><a href="global.html#handleClose">handleClose</a></li><li><a href="global.html#handlePasswordChange">handlePasswordChange</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#resetForm">resetForm</a></li><li><a href="global.html#updatePost">updatePost</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 01 2024 18:05:52 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

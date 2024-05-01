@@ -2,6 +2,14 @@ import estilos from "../styles/sobreNosotros.module.css";
 import { HeaderSobreNosotros } from "../components/HeaderSobreNosotros";
 import { EnfoqueSobreNosotros } from "../components/EnfoqueSobreNosotros";
 
+/**
+ * Este es el componente SobreNosotros, es la vista de Sobre Nosotros en el sitio web.
+ * Acá se llaman a los componentes HeaderSobreNosotros y EnfoqueSobreNosotros.
+ * @namespace SobreNosotros
+ * @page
+ * @component
+ * @returns {JSX.Element} El componente renderizado
+ */
 export const SobreNosotros = () => {
   return (
     <div className={`container-fluid ${estilos.contenedorPrincipal}`}>

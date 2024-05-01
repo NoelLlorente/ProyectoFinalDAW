@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/FormPosts.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/FormPosts.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
+import estilos from "../styles/formPosts.module.css";
+
+/**
+ * Este componente es el formulario que se utiliza tanto para crear posts, como para modificarles.
+ *
+ * @function FormPosts
+ * @memberof Blog
+ * @prop {function} agregarPost Es una función del Provider PostProvider, básicamente nos permite crear los post, estos se agregan a la db y al provider.
+ * @prop {setter} setPost Se utiliza para cambiar el estado del post, básicamente podriamos cambiar los datos de un post, o almacenar uno.
+ * @prop {setter} setMostrarPost Se utiliza para modificar el estado de mostrarPost. Se utiliza para establecer un boolean (true, false).
+ * @prop {Object} postAModificar Si estamos con el formulario en modo de modificar entonces este objeto contendrá los datos del post a modificar, se utilizará para rellenar el formulario.
+ * @prop {function} modificarPost Esta es una función que viene del provider, nos permitirá modificar le post tanto en el provider como en la db.
+ * @returns {JSX.Element} Se retorna el componente.
+ */
+export const FormPosts = ({
+  agregarPost,
+  setPost,
+  setMostrarPost,
+  postAModificar,
+  modificarPost,
+}) => {
+  /**
+   * Se crean dos estados o propiedades.
+   * Se utilizarán para validar el formulario y para saber si el formulario esta en modo modificar o en modo crear.
+   */
+  const [descripcion, setDescripcion] = useState("");
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
+
+  /**
+   * Se utiliza el useEffect cada vez que cambie el postAModificar, si este contiene un objeto, entonces los inputs del form, pillarán los datos del post.
+   */
+  useEffect(() => {
+    if (postAModificar) {
+      setDescripcion(postAModificar.descripcion);
+      setIsUpdateMode(true);
+    }
+  }, [postAModificar]);
+
+  /**
+   * Esta función se utiliza para crear un post, o para modificar un post.
+   * @function FormPosts_handleSubmit
+   * @param {Event} e Es el evento del formulario
+   * @returns {None} No retorna nada.
+   */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!descripcion) {
+      return;
+    }
+
+    const detail = {
+      descripcion: descripcion,
+    };
+    let nuevoPost;
+    if (isUpdateMode) {
+      nuevoPost = await modificarPost(postAModificar.id, detail.descripcion);
+    } else {
+      nuevoPost = await agregarPost(detail);
+    }
+    setPost(nuevoPost);
+    setMostrarPost(true);
+  };
+
+  /**
+   * Se utiliza este useEffect para validar en tiempo real los campos del formulario.
+   */
+  useEffect(() => {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".needs-validation");
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach((form) => {
+      form.addEventListener(
+        "submit",
+        (event) => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  }, []);
+
+  return (
+    &lt;div className={`container ${estilos.contenedorForm}`}>
+      &lt;form
+        className={`needs-validation ${estilos.form}`}
+        noValidate
+        onSubmit={handleSubmit}
+      >
+        &lt;h2>Formulario Consultas&lt;/h2>
+        &lt;div className="mb-3">
+          &lt;label htmlFor="descripcionPost" className="form-label">
+            Descripción del Post:
+          &lt;/label>
+          &lt;textarea
+            className="form-control"
+            id="descripcionPost"
+            rows="5"
+            maxLength="500"
+            style={{ resize: "none" }}
+            placeholder="Breve descripción del post..."
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+            required
+          >&lt;/textarea>
+          &lt;div className="invalid-feedback">
+            Por favor, proporciona una descripción.
+          &lt;/div>
+        &lt;/div>
+        &lt;button className="btn btn-primary" type="submit">
+          {isUpdateMode ? "Actualizar Post" : "Crear Post"}
+        &lt;/button>
+      &lt;/form>
+    &lt;/div>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Blog.html">Blog</a></li><li><a href="Consultas.html">Consultas</a></li><li><a href="Contacto.html">Contacto</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Home.html">Home</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="SobreNosotros.html">SobreNosotros</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EntradaConsulta">EntradaConsulta</a></li><li><a href="global.html#EntradaPost">EntradaPost</a></li><li><a href="global.html#FormConsultas_handleSubmit">FormConsultas_handleSubmit</a></li><li><a href="global.html#FormContacto_handleSubmit">FormContacto_handleSubmit</a></li><li><a href="global.html#FormPosts_handleSubmit">FormPosts_handleSubmit</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#PasswordAlerts">PasswordAlerts</a></li><li><a href="global.html#PasswordChangeForm">PasswordChangeForm</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordRequirements">PasswordRequirements</a></li><li><a href="global.html#ScrollToTop">ScrollToTop</a></li><li><a href="global.html#SidebarBlog_handleClickCrear">SidebarBlog_handleClickCrear</a></li><li><a href="global.html#SidebarBlog_handleClickEliminarTodos">SidebarBlog_handleClickEliminarTodos</a></li><li><a href="global.html#SidebarBlog_handleClickMenuBtn">SidebarBlog_handleClickMenuBtn</a></li><li><a href="global.html#SidebarBlog_handleClickMostrarTodos">SidebarBlog_handleClickMostrarTodos</a></li><li><a href="global.html#addConsultaResultado">addConsultaResultado</a></li><li><a href="global.html#changeUserPass">changeUserPass</a></li><li><a href="global.html#createConsulta">createConsulta</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#deleteConsulta">deleteConsulta</a></li><li><a href="global.html#deleteConsultas">deleteConsultas</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePosts">deletePosts</a></li><li><a href="global.html#getAIResponse">getAIResponse</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getConsultas">getConsultas</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getPostsUsuario">getPostsUsuario</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleChangePassword">handleChangePassword</a></li><li><a href="global.html#handleClickCrear">handleClickCrear</a></li><li><a href="global.html#handleClickEliminarTodos">handleClickEliminarTodos</a></li><li><a href="global.html#handleClickMenuBtn">handleClickMenuBtn</a></li><li><a href="global.html#handleClose">handleClose</a></li><li><a href="global.html#handlePasswordChange">handlePasswordChange</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#resetForm">resetForm</a></li><li><a href="global.html#updatePost">updatePost</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 01 2024 18:05:52 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

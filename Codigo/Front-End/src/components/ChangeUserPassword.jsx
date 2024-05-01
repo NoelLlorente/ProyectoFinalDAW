@@ -9,7 +9,22 @@ import { PasswordRequirements } from "./PasswordRequirements";
 import { PasswordChangeForm } from "./PasswordChangeForm";
 import { PasswordAlerts } from "./PasswordAlerts";
 
+/**
+ * Este componente es el formulario para cambiar la contraseña del usuario. Este es llamado por la vista Perfil.
+ * En este componente se válida el formulario y se llevan a cabo todas las operaciones necesarias para que el cambio de contraseña funcione.
+ * A tener en cuenta la contraseña se cambia gracias a un token que se genera llamando a un api de JWT.
+ * Luego eso token le utilizamos para llamar a otra api de JWT que nos permite realizar operaciones sobre un usuario. En este caso cambiar la contraseña.
+ *
+ * @memberof Perfil
+ * @function ChangeUserPassword
+ * @param {object} props Recibe propiedades desde el padre, la vista Perfil. Las propiedades son (show, onHide, onPasswordChange, user)
+ * @returns {JSX.Element} El componente renderizado
+ */
 export const ChangeUserPassword = (props) => {
+  /**
+   * Se crean los useState necesarios para que todo funcione.
+   * Se crea un useState que se utilizará como validador de la contraseña, este el passwordValid.
+   */
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [token, setToken] = useState(null);
@@ -23,18 +38,38 @@ export const ChangeUserPassword = (props) => {
     hasSpecialChar: null,
   });
   const [allRequirementsMet, setAllRequirementsMet] = useState(false);
+
+  /** Obtenemos las props (propiedades) del padre, la vista Perfil. */
   const { onPasswordChange, ...modalProps } = props;
 
+  /**
+   * Función en la que se resetea con los setters de los useState el formulario.
+   * @function resetForm
+   * @returns {None} No retorna nada
+   */
   const resetForm = () => {
     setPassword("");
     setConfirmPassword("");
   };
 
+  /**
+   * Ocultamos la modal y se llama a la función que resea el formulario
+   * @function handleClose
+   * @returns {None} No retorna nada
+   */
   const handleClose = () => {
     resetForm();
     props.onHide();
   };
 
+  /**
+   * Funcion que maneja el cambio de la contraseña, acá se llama a una función changeUserPass con el id del usuario, el token y la nueva contraseña.
+   * Obviamente esto si todos los campos se han validado y todo es correcto.
+   * Esta función se llama en el botón.
+   * @function handleChangePassword
+   * @param {Event} e - Es el evento del formulario.
+   * @return {None} No retorna nada
+   */
   const handleChangePassword = async (e) => {
     e.preventDefault();
     setChangingPass(true);
@@ -59,6 +94,9 @@ export const ChangeUserPassword = (props) => {
     }
   };
 
+  /**
+   * Se utiliza el useEffect cada vez que cambie la contraseña, esto se utiliza para realizar validación en tiempo real.
+   */
   useEffect(() => {
     setPasswordValid({
       minLength: password.length >= 8,
@@ -69,6 +107,11 @@ export const ChangeUserPassword = (props) => {
     });
   }, [password]);
 
+  /**
+   * Se utiliza el useEffect cada vez que cambia la propiedad o variable changingPass.
+   * Acá se obtiene el token del api de JWT a través de una funcion getAuthToken()
+   * También se obtiene el id del usuario que esta logueado actualmente.
+   */
   useEffect(() => {
     const fetchToken = async () => {
       const result = await getAuthToken();
@@ -86,6 +129,9 @@ export const ChangeUserPassword = (props) => {
     fetchToken();
   }, [changingPass]);
 
+  /**
+   * Se retorna el html y la funcionalidades que queremos que se renderice en el padre.
+   */
   return (
     <Modal
       {...modalProps}

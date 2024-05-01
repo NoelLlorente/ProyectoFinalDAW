@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Tools/opPosts.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Tools/opPosts.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+import { getDate } from "./getDate";
+
+/**
+ * Esta es la función que se llama en el provider {@link Blog.PostProvider} para cargar todos los posts de la db.
+ * En esta función se llama a mi api rest para cargar los datos.
+ *
+ * @function getPosts
+ * @returns {Promise&lt;Object>} Se retorna una promesa que contiene un array de objetos.
+ */
+export const getPosts = async () => {
+  try {
+    const response = await axios.get(
+      `https://localhost:7296/api/Post/cargarPosts`
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.log("Error al cargar los datos de los posts: " + error);
+  }
+};
+
+/**
+ * Esta es la función que se llama en el provider {@link Blog.PostProvider} para cargar todos los posts del usuario logueado de la db.
+ * En esta función se llama a mi api rest para cargar los datos.
+ *
+ * @function getPostsUsuario
+ * @param {string } email Es el correo del usuario logueado.
+ * @returns {Promise&lt;Object>} Se retorna una promesa que contiene un array de objetos.
+ */
+export const getPostsUsuario = async (email) => {
+  try {
+    const response = await axios.get(
+      `https://localhost:7296/api/Post/cargarPostsUsuario?correo=${email}`
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.log("Error al cargar los datos de las posts del usuario: " + error);
+  }
+};
+
+/**
+ * Esta es la función que se llama en el provider {@link Blog.PostProvider} para crear los posts.
+ * En esta función se llama a mi api rest pasandole el email del usuario, y los datos del post, para guardarle en la db.
+ * También en esta función se ve como llamamos al getDate(), esta es una función que nos devuelve la fecha y hora actual en un formato que la db entiende.
+ *
+ * @function createPost
+ * @param {Object} post Es el objeto que contiene los datos del post.
+ * @param {string} email Es el correo del usuario logueado.
+ * @returns {Promise&lt;Object>} Se retorna una promesa que contiene el objeto.
+ */
+export const createPost = async (post, email) => {
+  try {
+    const response = await axios.post(
+      `https://localhost:7296/api/Post/crearPost?correo=${email}`,
+      {
+        descripcion: post.descripcion,
+        fecha: getDate(),
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.log("Error al crear post: " + error);
+  }
+};
+
+/**
+ * Esta es la función que se llama en el provider {@link Blog.PostProvider} para eliminar un post.
+ * En esta función se llama a mi api rest pasandole el email del usuario, y el id del post, para eliminarle en la db.
+ *
+ * @function deletePost
+ * @param {number} id Es el id del post a eliminar
+ * @param {string} email Es el correo del usuario logueado.
+ * @returns {Promise&lt;Object>} Se retorna una promesa que contiene el objeto.
+ */
+export const deletePost = async (id, email) => {
+  try {
+    const response = await axios.get(
+      `https://localhost:7296/api/Post/eliminarPost?correo=${email}&amp;idPost=${id}`
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.log("Error al eliminar el post del usuario: " + error);
+  }
+};
+
+/**
+ * Esta es la función que se llama en el provider {@link Blog.PostProvider} para eliminar todas los posts.
+ * En esta función se llama a mi api rest pasandole el email del usuario, para eliminar todos los posts del usuario de la db.
+ *
+ * @function deletePosts
+ * @param {string} email Es el correo del usuario logueado.
+ * @returns {Promise&lt;Object>} Se retorna una promesa que contiene el objeto.
+ */
+export const deletePosts = async (email) => {
+  try {
+    const response = await axios.get(
+      `https://localhost:7296/api/Post/eliminarPosts?correo=${email}`
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.log("Error al eliminar los posts del usuario: " + error);
+  }
+};
+
+/**
+ * Esta es la función que se llama en el provider {@link Blog.PostProvider} para modificar un post.
+ * En esta función se llama a mi api rest pasandole el email del usuario, el id del post a modificar, y la descripción del post, para actualizarle en la db.
+ *
+ * @param {number} id Es el id del post a modificar.
+ * @param {string} email Es el correo del usuario logueado.
+ * @param {string} descripcion Es la nueva descripción del post.
+ * @returns {Promise&lt;Object>} Se retorna una promesa que contiene el objeto con los datos del usuario modificado.
+ */
+export const updatePost = async (id, email, descripcion) => {
+  try {
+    const response = await axios.post(
+      `https://localhost:7296/api/Post/actualizarPost?correo=${email}&amp;idPost=${id}`,
+      JSON.stringify(descripcion),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.log("Error al crear post: " + error);
+  }
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Blog.html">Blog</a></li><li><a href="Consultas.html">Consultas</a></li><li><a href="Contacto.html">Contacto</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Home.html">Home</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="SobreNosotros.html">SobreNosotros</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EntradaConsulta">EntradaConsulta</a></li><li><a href="global.html#EntradaPost">EntradaPost</a></li><li><a href="global.html#FormConsultas_handleSubmit">FormConsultas_handleSubmit</a></li><li><a href="global.html#FormContacto_handleSubmit">FormContacto_handleSubmit</a></li><li><a href="global.html#FormPosts_handleSubmit">FormPosts_handleSubmit</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#PasswordAlerts">PasswordAlerts</a></li><li><a href="global.html#PasswordChangeForm">PasswordChangeForm</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordRequirements">PasswordRequirements</a></li><li><a href="global.html#ScrollToTop">ScrollToTop</a></li><li><a href="global.html#SidebarBlog_handleClickCrear">SidebarBlog_handleClickCrear</a></li><li><a href="global.html#SidebarBlog_handleClickEliminarTodos">SidebarBlog_handleClickEliminarTodos</a></li><li><a href="global.html#SidebarBlog_handleClickMenuBtn">SidebarBlog_handleClickMenuBtn</a></li><li><a href="global.html#SidebarBlog_handleClickMostrarTodos">SidebarBlog_handleClickMostrarTodos</a></li><li><a href="global.html#addConsultaResultado">addConsultaResultado</a></li><li><a href="global.html#changeUserPass">changeUserPass</a></li><li><a href="global.html#createConsulta">createConsulta</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#deleteConsulta">deleteConsulta</a></li><li><a href="global.html#deleteConsultas">deleteConsultas</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePosts">deletePosts</a></li><li><a href="global.html#getAIResponse">getAIResponse</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getConsultas">getConsultas</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getPostsUsuario">getPostsUsuario</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleChangePassword">handleChangePassword</a></li><li><a href="global.html#handleClickCrear">handleClickCrear</a></li><li><a href="global.html#handleClickEliminarTodos">handleClickEliminarTodos</a></li><li><a href="global.html#handleClickMenuBtn">handleClickMenuBtn</a></li><li><a href="global.html#handleClose">handleClose</a></li><li><a href="global.html#handlePasswordChange">handlePasswordChange</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#resetForm">resetForm</a></li><li><a href="global.html#updatePost">updatePost</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 01 2024 18:05:52 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

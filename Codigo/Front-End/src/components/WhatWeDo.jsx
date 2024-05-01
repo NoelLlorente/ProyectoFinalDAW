@@ -5,16 +5,36 @@ import arrowsIcon from "../assets/img/icon_arrowsWhatWeDo.svg";
 import relojIcon from "../assets/img/icon_relojWhatWeDo.svg";
 import boxIcon from "../assets/img/icon_boxWhatWeDo.svg";
 
+/**
+ * Es es el componente WhatWeDo del Home, en esta sección se hablará de lo que hacemos.
+ * @function WhatWeDo
+ * @memberof Home
+ * @returns {JSX.Element} El componente renderizado
+ */
 export const WhatWeDo = () => {
+  /**
+   * Creamos el estado isVisible, y su setter, con tres bloques.
+   * Estos 3 bloques tiene una animación por eso utilizaremos el useState, para manejar cuando son visibles y cuando no.
+   */
   const [isVisible, setIsVisible] = useState({
     block1: false,
     block2: false,
     block3: false,
   });
+
+  /**
+   * Creamos tres useRef que se utilizan para almacenar referencias a elementos del DOM.
+   * Estas referencias se utilizan para observar si los bloques están visibles en la pantalla mediante IntersectionObserver.
+   */
   const refOne = useRef(null);
   const refTwo = useRef(null);
   const refThree = useRef(null);
 
+  /**
+   * Utilizamos un useEffect, para configurar el IntersectionObserver.
+   * Cuando los bloques son visibles en la pantalla, se actualiza el estado isVisible para mostrarlos.
+   * El useEffect solo ocurrirá una vez.
+   */
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries, observer) => {
@@ -36,6 +56,7 @@ export const WhatWeDo = () => {
       observer.disconnect();
     };
   }, []);
+
   return (
     <div className="container-fluid contenedor_whatWeDo">
       <section className="seccion_intro">
@@ -45,7 +66,9 @@ export const WhatWeDo = () => {
       <section className="seccion_bloques">
         <div
           id="block1"
-          className={`bloques ${isVisible.block1 ? "visible" : ""}`}
+          className={`bloques ${
+            isVisible.block1 ? "visible" : ""
+          }`} /** Se muestra el bloque si isVisible es true */
           ref={refOne}
         >
           <img src={relojIcon} />
@@ -59,7 +82,9 @@ export const WhatWeDo = () => {
         </div>
         <div
           id="block2"
-          className={`bloques ${isVisible.block2 ? "visible" : ""}`}
+          className={`bloques ${
+            isVisible.block2 ? "visible" : ""
+          }`} /** Se muestra el bloque si isVisible es true */
           ref={refTwo}
         >
           <img src={arrowsIcon} />
@@ -73,7 +98,9 @@ export const WhatWeDo = () => {
         </div>
         <div
           id="block3"
-          className={`bloques ${isVisible.block3 ? "visible" : ""}`}
+          className={`bloques ${
+            isVisible.block3 ? "visible" : ""
+          }`} /** Se muestra el bloque si isVisible es true */
           ref={refThree}
         >
           <img src={boxIcon} />

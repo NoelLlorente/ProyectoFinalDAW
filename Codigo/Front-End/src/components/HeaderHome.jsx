@@ -4,6 +4,14 @@ import video from "../assets/video/AI_video.mp4";
 import "../styles/headerHome.css";
 import { LoginButton } from "./LoginButton";
 
+/**
+ * Este componente es el header de la página Home.
+ * Aca se llama al componente LoginButton que nos llevará al formulario de login de JWT.
+ * @function HeaderHome
+ * @memberof Home
+ * @prop {boolean} isAuthenticated - Valida que el usuario está autenticado
+ * @returns {JSX.Element} El componente renderizado
+ */
 export const HeaderHome = ({ isAuthenticated }) => {
   return (
     <div className="container-fluid contenedor">
@@ -12,7 +20,7 @@ export const HeaderHome = ({ isAuthenticated }) => {
         Tu navegador no soporta el elemento de video.
       </video>
       <div className="container-md contenedor_titulo">
-        <h1>THE BUSSINESS JOURNEY</h1>
+        <h1>THE BUSINESS JOURNEY</h1>
         <h3>LA INTELIGENCIA QUE IMPULSA NEGOCIOS: AVANZA CON IA.</h3>
         <div className="botones_header">
           {!isAuthenticated ? <LoginButton texto="Sign Up" /> : null}

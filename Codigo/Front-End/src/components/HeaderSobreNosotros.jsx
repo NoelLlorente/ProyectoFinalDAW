@@ -1,5 +1,13 @@
 import estilos from "../styles/header.module.css";
 
+/**
+ * Este es el componente HeaderSobreNosotros, será el header que se mostrará en la vista Sobre Nosotros.
+ * Básicamente sería el encabezado de Sobre Nosotros.
+ * Acá se describirá brevemente de que tratará el sitio web.
+ * @memberof SobreNosotros
+ * @function HeaderSobreNosotros
+ * @returns {JSX.Element} El componente renderizado
+ */
 export const HeaderSobreNosotros = () => {
   return (
     <div

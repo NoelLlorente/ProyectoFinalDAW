@@ -4,6 +4,16 @@ import { Link, NavLink } from "react-router-dom";
 import { LoginButton } from "./LoginButton";
 import "../styles/navbar.css";
 
+/**
+ * Este componente será la navbar o barra de navegación del sitio web.
+ * Acá dependiendo de si estamos logueados o no se mostrarán unos enlaces u otros.
+ * @namespace Navbar
+ * @prop {Boolean} isAuthenticated Es un booleano que cambia a true si el usuario esta logueado.
+ * @prop {function} logout Es una funcion que nos otorga JWT para cerrar sesión.
+ * @prop {Object} user Es un objeto que se llena con los datos del usuario logueado.
+ * @prop {Boolean} isLoading Es un booleano que nos indica si esta cargando todavía, osea si todavía se estan cargando los datos de jwt.
+ * @returns {JSX.Element} Se retorna el componente para ser renderizado
+ */
 export const Navbar = ({ isAuthenticated, logout, user, isLoading }) => {
   if (isLoading) {
     return <div style={{ color: "black !important" }}>Loading ...</div>;

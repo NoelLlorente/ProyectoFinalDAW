@@ -1,6 +1,14 @@
 /* eslint-disable react/prop-types */
 import { Form } from "react-bootstrap";
 
+/**
+ * Este componente contiene los mensajes que se mostrarán de requisitos que se deben cumplier para el cambio de contraseña.
+ * Este se llama en el componente {@link Perfil.ChangeUserPassword}
+ *
+ * @function PasswordRequirements
+ * @prop {boolean} passwordValid Es un booleano que nos indica si la contraseña es valida o no.
+ * @returns {JSX.Element} Se retorna el componente.
+ */
 export const PasswordRequirements = ({ passwordValid }) => (
   <Form.Text className="text-muted">
     Su contraseña debe contener:

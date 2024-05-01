@@ -1,5 +1,16 @@
 import axios from "axios";
 
+/**
+ * Esta función llama al api rest de https://groq.com/, y nos genera una IA la respuesta a nuestra consulta.
+ * Este función se utiliza en la función del que se llama en el provider {@link addConsultaResultado}.
+ * Acá como se puede ver le paso un mensaje muy largo como role system, pues en este mensaje le estoy indicando al modelo IA,
+ * como quiero que me responda con los datos que le estoy pasando al api rest.
+ * También más abajo se puede apreciar un campo model, pues en este campo se indica el modelo IA que va a generarme una respuesta (El nuevo LLama3 de Meta).
+ *
+ * @param {string} descripcion Es la descripción de la consulta
+ * @param {*} presupuesto Es el presupuesto de la consulta
+ * @returns {Promise<Object>} Se devuelve una promesa que contiene la respuesta a la consulta que ha sido generada por el modelo Llama3
+ */
 export const getAIResponse = async (descripcion, presupuesto) => {
   const data = {
     messages: [

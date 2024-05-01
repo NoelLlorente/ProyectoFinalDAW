@@ -6,6 +6,7 @@ import estilos from "../styles/formularioContacto.module.css";
  * Acá se rellenan los datos, se validán y se simula un mensaje de que todo ha ido bien.
  * Este formulario no se envía a ningun sitio, solo es para mejorar el diseño.
  * @componente
+ * @function FormContacto
  * @memberof Contacto
  * @returns {JSX.Element} Se retorna el componente renderizado
  */
@@ -47,9 +48,9 @@ export const FormContacto = () => {
    * Cuando hagamos click si los campos son válidos se mostrará el mensaje de éxito.
    * Esto se hace actualizando el estado setShowAlert a true.
    * Si los campos son válidos se resetea el formulario y se remueve la clase was-validated.
-   * @function handleSubmit
-   * @memberof FormContacto
+   * @function FormContacto_handleSubmit
    * @param {Event} e es el Evento del formulario
+   * @returns {None} No devuelve nada
    */
   const handleSubmit = (e) => {
     e.preventDefault();

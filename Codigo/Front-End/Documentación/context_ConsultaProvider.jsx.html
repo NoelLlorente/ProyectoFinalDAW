@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: context/ConsultaProvider.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: context/ConsultaProvider.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable react/prop-types */
+import { useEffect, useReducer } from "react";
+import {
+  addConsultaResultado,
+  createConsulta,
+  deleteConsulta,
+  deleteConsultas,
+  getConsultas,
+} from "../Tools/opConsultas";
+import { ConsultaContext } from "./ConsultaContext";
+
+/**
+ * Se inicializa el estado en un array vacío
+ */
+const initialState = [];
+
+/**
+ * Este componente es el provider, osea acá se le da funcionalidad a toda la vista de Consultas,
+ * en este provider se crean las consultas tanto en la db como en el initialState, también se eliminan las consultas, y se crean los resultados de cada consulta.
+ * Básicamente si yo borro una consulta, se borra tanto del provider como de la db.
+ *
+ * @function ConsultaProvider
+ * @memberof Consultas
+ * @prop {Object} user Es el objeto que contiene los datos del usuario logueado.
+ * @prop {array} children Serán los hijos de este componente.
+ * @returns {JSX.Element} Se retorna el componente ConsultaContext.Provider con las funcionalidades de este provider.
+ */
+export const ConsultaProvider = ({ user, children }) => {
+  /**
+   * Se crea un reducer, osea en este reducer se realizarán las funciones sobre el initialState.
+   *
+   * @param {Array} state Es el estado inicial (initialState), osea un array vacio
+   * @param {Object} action Será la acción, según está se realizará una cosa del switch.
+   * @returns {State} Se retorna un estado.
+   */
+  const consultasReducer = (state = initialState, action = {}) => {
+    switch (action.type) {
+      case "[CONSULTA] Cargar Consultas":
+        return action.payload;
+      case "[CONSULTA] Agregar Consulta":
+        return [...state, action.payload];
+      case "[CONSULTA] Eliminar Consulta":
+        return state.filter((consulta) => consulta.id !== action.payload);
+      case "[CONSULTA] Agregar Consulta Resultado":
+        return state.map((consulta) => {
+          if (consulta.id === action.payload.idconsulta) {
+            return {
+              ...consulta,
+              resultadoConsulta: action.payload,
+            };
+          }
+          return consulta;
+        });
+      case "[CONSULTA] Eliminar Consultas":
+        return [];
+      default:
+        return state;
+    }
+  };
+
+  /**
+   * Llamamos al reducer que creamos anteriormente y obtenemos la lista de consultas y el dispatch
+   */
+  const [listaConsultas, dispatch] = useReducer(consultasReducer, initialState);
+
+  /**
+   * Este useEffect se ejecutará cada vez que cambie el objeto usuario, osea cada vez que sea un usuario distinto.
+   * Acá se cargan las consultas de la db, y se realiza el dispatch que cambiará los datos en el estado initialState o mejor dicho listaConsultas.
+   */
+  useEffect(() => {
+    if (user) {
+      const cargarConsultas = async () => {
+        const datos = await getConsultas(user.email);
+        dispatch({ type: "[CONSULTA] Cargar Consultas", payload: datos });
+      };
+      cargarConsultas();
+    }
+  }, [user]);
+
+  /**
+   * Es una función que nos permitirá crear una consulta, y añadirla a la db y a la listaConsultas.
+   * Como se puede ver se llama a una función createConsulta, esta función es la que se encarga se llamar a un api pasandole los datos, y estos se guardarán en la db.
+   *
+   * @param {Object} consulta Es el objeto que contiene los datos de la consulta que se va a añadir a la db y a la listaConsultas.
+   * @returns {number} Se retorna el id de la consulta que se ha creado en la db.
+   */
+  const agregarConsulta = async (consulta) => {
+    const nuevaConsulta = await createConsulta(consulta, user.email);
+    const action = {
+      type: "[CONSULTA] Agregar Consulta",
+      payload: nuevaConsulta,
+    };
+    dispatch(action);
+    return nuevaConsulta.id;
+  };
+
+  /**
+   * Es una función que nos permitirá eliminar una consulta dado un id, y eliminarla de la db y de la listaConsultas.
+   * Como se puede ver se llama a una función deleteConsulta, esta función es la que se encarga de llamar a un api que realizará la eliminación de la db.
+   *
+   * @param {number} id Es el id de la consulta a eliminar
+   * @returns {None} No retorna nada
+   */
+  const eliminarConsulta = async (id) => {
+    await deleteConsulta(id, user.email);
+    const action = {
+      type: "[CONSULTA] Eliminar Consulta",
+      payload: id,
+    };
+    dispatch(action);
+  };
+
+  /**
+   * Es una función que nos permitirá eliminar todas las consultas, tanto de la db, como de la listaConsultas.
+   * Como se puede ver se llama a una función deleteConsultas, esta función es la que se encarga se llamar a un api que realizará la eliminación de la db.
+   *
+   * @returns {None} No retorna nada
+   */
+  const eliminarConsultas = async () => {
+    await deleteConsultas(user.email);
+    const action = {
+      type: "[CONSULTA] Eliminar Consultas",
+    };
+    dispatch(action);
+  };
+
+  /**
+   * Es una función que nos permitirá agregar el resultado obtenido de la IA a una consulta, obviamente este se agregará a la db y a la listaConsultas.
+   * Como se puede ver se llama a una función addConsultaResultado, esta función es la que se encarga se llamar a un api nos devolverá el resultado, y le agregará a la db.
+   * @param {Object} consulta Es el objeto que contiene los datos de la consulta.
+   * @returns {None} No retorna nada
+   */
+  const agregarConsultaResultado = async (consulta) => {
+    const resultado = await addConsultaResultado(consulta);
+    const action = {
+      type: "[CONSULTA] Agregar Consulta Resultado",
+      payload: resultado,
+    };
+
+    dispatch(action);
+  };
+
+  /**
+   * Se retorna este Provider con sus funcionalidades y la listaConsultas.
+   */
+  return (
+    &lt;ConsultaContext.Provider
+      value={{
+        listaConsultas,
+        agregarConsulta,
+        eliminarConsulta,
+        eliminarConsultas,
+        agregarConsultaResultado,
+      }}
+    >
+      {children}
+    &lt;/ConsultaContext.Provider>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Blog.html">Blog</a></li><li><a href="Consultas.html">Consultas</a></li><li><a href="Contacto.html">Contacto</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Home.html">Home</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="SobreNosotros.html">SobreNosotros</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EntradaConsulta">EntradaConsulta</a></li><li><a href="global.html#EntradaPost">EntradaPost</a></li><li><a href="global.html#FormConsultas_handleSubmit">FormConsultas_handleSubmit</a></li><li><a href="global.html#FormContacto_handleSubmit">FormContacto_handleSubmit</a></li><li><a href="global.html#FormPosts_handleSubmit">FormPosts_handleSubmit</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#PasswordAlerts">PasswordAlerts</a></li><li><a href="global.html#PasswordChangeForm">PasswordChangeForm</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordRequirements">PasswordRequirements</a></li><li><a href="global.html#ScrollToTop">ScrollToTop</a></li><li><a href="global.html#SidebarBlog_handleClickCrear">SidebarBlog_handleClickCrear</a></li><li><a href="global.html#SidebarBlog_handleClickEliminarTodos">SidebarBlog_handleClickEliminarTodos</a></li><li><a href="global.html#SidebarBlog_handleClickMenuBtn">SidebarBlog_handleClickMenuBtn</a></li><li><a href="global.html#SidebarBlog_handleClickMostrarTodos">SidebarBlog_handleClickMostrarTodos</a></li><li><a href="global.html#addConsultaResultado">addConsultaResultado</a></li><li><a href="global.html#changeUserPass">changeUserPass</a></li><li><a href="global.html#createConsulta">createConsulta</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#deleteConsulta">deleteConsulta</a></li><li><a href="global.html#deleteConsultas">deleteConsultas</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePosts">deletePosts</a></li><li><a href="global.html#getAIResponse">getAIResponse</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getConsultas">getConsultas</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getPostsUsuario">getPostsUsuario</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleChangePassword">handleChangePassword</a></li><li><a href="global.html#handleClickCrear">handleClickCrear</a></li><li><a href="global.html#handleClickEliminarTodos">handleClickEliminarTodos</a></li><li><a href="global.html#handleClickMenuBtn">handleClickMenuBtn</a></li><li><a href="global.html#handleClose">handleClose</a></li><li><a href="global.html#handlePasswordChange">handlePasswordChange</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#resetForm">resetForm</a></li><li><a href="global.html#updatePost">updatePost</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 01 2024 18:05:52 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

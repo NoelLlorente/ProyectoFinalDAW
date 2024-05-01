@@ -1,6 +1,13 @@
 import img_innovacion from "../assets/img/img_innovacion.jpg";
 import img_seguridad from "../assets/img/img_seguridad.jpg";
 import "../styles/compromisoHome.css";
+
+/**
+ * Este es el componente Compromiso que se mostrará en Home, básicame en este componente indicamos a lo me comprometo.
+ * @function Compromiso
+ * @memberof Home
+ * @returns {JSX.Element} El componente renderizado
+ */
 export const Compromiso = () => {
   return (
     <div className="container-fluid contenedor_compromiso">

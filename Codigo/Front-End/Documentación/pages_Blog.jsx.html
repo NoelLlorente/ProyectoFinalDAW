@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/Blog.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/Blog.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable react/prop-types */
+import { useContext, useEffect, useState } from "react";
+import estilos from "../styles/blog.module.css";
+import { MdMenu } from "react-icons/md";
+import { SidebarBlog } from "../components/SidebarBlog";
+import { PostContext } from "../context/PostContext";
+import { PanelPost } from "../components/PanelPost";
+import { FormPosts } from "../components/FormPosts";
+
+/**
+ * Este componente es la vista del Blog, donde se crean los posts.
+ * Acá se utiliza el provider PostProvider que contiene las funcionalidades de crear, eliminar, cargar, etc.
+ * También se llaman a distintos componentes como son el sidebarBlog, el FormPost y el PanelPost.
+ *
+ * @namespace Blog
+ * @returns {JSX.Element} Se retorna el componente.
+ */
+export const Blog = () => {
+  /**
+   * Se crean los useState(Estados), para manejar distintas funcionalidades.
+   */
+  const [displayBtn, setDisplayBtn] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [mostrarPost, setMostrarPost] = useState(false);
+  const [post, setPost] = useState(null);
+  const [postAModificar, setPostAModificar] = useState(null);
+  const [mostrarTodosPosts, setMostrarTodosPosts] = useState(true);
+  const [widthSurpassed, setWidthSurpassed] = useState(
+    window.innerWidth &lt; 1870
+  );
+
+  /**
+   * No traemos las funcionalidades del provider.
+   */
+  const {
+    listaPosts,
+    listaPostsUsuario,
+    agregarPost,
+    eliminarPost,
+    modificarPost,
+    eliminarPosts,
+  } = useContext(PostContext);
+
+  /**
+   * Esta función manejará que cuando hagamos click en un post del sidebar, se muestre correctamente.
+   * Acá también cuando hacemos click en un post, obtenemos sus datos.
+   *
+   * @param {Object} post Es el objeto que contiene los datos del post
+   * @returns {None} No devuelve nada.
+   */
+  const handlePostClick = (post) => {
+    setMostrarTodosPosts(false);
+    setPost(post);
+    setPostAModificar(null);
+    setMostrarPost(true);
+  };
+
+  /**
+   * Se maneja que cuando hagamos click en el botón modificar de un post en el sidebar,
+   * obtengamos sus datos y se cambien algunos estados.
+   *
+   * @param {Object} post Es el objeto que contiene los datos del post
+   * @returns {None} No devuelve nada.
+   */
+  const handleModificarPost = (post) => {
+    setMostrarTodosPosts(false);
+    setPost(null);
+    setMostrarPost(false);
+    setPostAModificar(post);
+  };
+
+  /**
+   * Se utiliza cuando hacemos click en el botón que despliega el sidebar, este también se utiliza para ocultar el sidebar.
+   * @returns {None} No retorna nada
+   */
+  const handleSidebarClick = () => {
+    setShowSidebar(true);
+    setDisplayBtn(false);
+  };
+
+  /**
+   * Se utiliza el useEffect para manejar cuando ocultar la sidebar según el tamaño de la ventana y cuando ocultarla.
+   * Además de cuando mostrar el botón y cuando ocultarlo
+   */
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth &lt; 1870) {
+        setWidthSurpassed(true);
+        setDisplayBtn(true);
+        setShowSidebar(false);
+      } else {
+        setWidthSurpassed(false);
+        setDisplayBtn(false);
+        setShowSidebar(true);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  /**
+   * Se retorna el componente. Como se puede apreciar, se muestra los componentes, algunos se muestrán si un estado(useState) tiene unas características, ejemplo este en True.
+   */
+  return (
+    &lt;div className={`container-fluid ${estilos.contenedor_blog}`}>
+      {displayBtn &amp;&amp; (
+        &lt;button
+          className={`btn btn-primary ${estilos.btn_abrirSidebar}`}
+          onClick={handleSidebarClick}
+        >
+          &lt;MdMenu />
+        &lt;/button>
+      )}
+      &lt;SidebarBlog
+        showSidebar={showSidebar}
+        widthSurpassed={widthSurpassed}
+        setDisplayBtn={setDisplayBtn}
+        setShowSidebar={setShowSidebar}
+        handlePostClick={handlePostClick}
+        listaPostsUsuario={listaPostsUsuario}
+        eliminarPost={eliminarPost}
+        setMostrarPost={setMostrarPost}
+        eliminarPosts={eliminarPosts}
+        setMostrarTodosPosts={setMostrarTodosPosts}
+        handleModificarPost={handleModificarPost}
+        setPostAModificar={setPostAModificar}
+      />
+      &lt;main className={estilos.main}>
+        {mostrarTodosPosts &amp;&amp; listaPosts &amp;&amp; (
+          &lt;div className={`container ${estilos.contenedor_todosPosts}`}>
+            {listaPosts.map((post) => (
+              &lt;PanelPost key={post.id} post={post} />
+            ))}
+          &lt;/div>
+        )}
+
+        {!mostrarPost &amp;&amp; postAModificar &amp;&amp; !mostrarTodosPosts &amp;&amp; (
+          &lt;FormPosts
+            agregarPost={agregarPost}
+            setMostrarPost={setMostrarPost}
+            setPost={setPost}
+            postAModificar={postAModificar}
+            modificarPost={modificarPost}
+          />
+        )}
+
+        {!mostrarPost &amp;&amp; !postAModificar &amp;&amp; !mostrarTodosPosts &amp;&amp; (
+          &lt;FormPosts
+            agregarPost={agregarPost}
+            setMostrarPost={setMostrarPost}
+            setPost={setPost}
+            postAModificar={postAModificar}
+            modificarPost={modificarPost}
+          />
+        )}
+
+        {post &amp;&amp;
+          mostrarPost &amp;&amp;
+          !mostrarTodosPosts &amp;&amp;
+          (() => {
+            const posts = listaPostsUsuario.find((p) => p.id === post.id);
+            return posts &amp;&amp; &lt;PanelPost post={posts} />;
+          })()}
+      &lt;/main>
+    &lt;/div>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Blog.html">Blog</a></li><li><a href="Consultas.html">Consultas</a></li><li><a href="Contacto.html">Contacto</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Home.html">Home</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="SobreNosotros.html">SobreNosotros</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EntradaConsulta">EntradaConsulta</a></li><li><a href="global.html#EntradaPost">EntradaPost</a></li><li><a href="global.html#FormConsultas_handleSubmit">FormConsultas_handleSubmit</a></li><li><a href="global.html#FormContacto_handleSubmit">FormContacto_handleSubmit</a></li><li><a href="global.html#FormPosts_handleSubmit">FormPosts_handleSubmit</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#PasswordAlerts">PasswordAlerts</a></li><li><a href="global.html#PasswordChangeForm">PasswordChangeForm</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordRequirements">PasswordRequirements</a></li><li><a href="global.html#ScrollToTop">ScrollToTop</a></li><li><a href="global.html#SidebarBlog_handleClickCrear">SidebarBlog_handleClickCrear</a></li><li><a href="global.html#SidebarBlog_handleClickEliminarTodos">SidebarBlog_handleClickEliminarTodos</a></li><li><a href="global.html#SidebarBlog_handleClickMenuBtn">SidebarBlog_handleClickMenuBtn</a></li><li><a href="global.html#SidebarBlog_handleClickMostrarTodos">SidebarBlog_handleClickMostrarTodos</a></li><li><a href="global.html#addConsultaResultado">addConsultaResultado</a></li><li><a href="global.html#changeUserPass">changeUserPass</a></li><li><a href="global.html#createConsulta">createConsulta</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#deleteConsulta">deleteConsulta</a></li><li><a href="global.html#deleteConsultas">deleteConsultas</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePosts">deletePosts</a></li><li><a href="global.html#getAIResponse">getAIResponse</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getConsultas">getConsultas</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getPostsUsuario">getPostsUsuario</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleChangePassword">handleChangePassword</a></li><li><a href="global.html#handleClickCrear">handleClickCrear</a></li><li><a href="global.html#handleClickEliminarTodos">handleClickEliminarTodos</a></li><li><a href="global.html#handleClickMenuBtn">handleClickMenuBtn</a></li><li><a href="global.html#handleClose">handleClose</a></li><li><a href="global.html#handlePasswordChange">handlePasswordChange</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#resetForm">resetForm</a></li><li><a href="global.html#updatePost">updatePost</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 01 2024 18:05:52 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

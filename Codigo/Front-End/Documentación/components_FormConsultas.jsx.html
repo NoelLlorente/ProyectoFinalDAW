@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/FormConsultas.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/FormConsultas.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
+import estilos from "../styles/formConsultas.module.css";
+
+/**
+ * Este componente es el formulario que se utiliza para crear las consultas.
+ * Acá se validan los datos, si son correctos se crea la consulta, sino se muestran los errores en tiempo real.
+ * @function FormConsultas
+ * @memberof Consultas
+ * @prop {function} agregarConsulta  Es una funcion del provider que nos permite agregar la consulta tanto a la db como al provider.
+ * @prop {setter} setConsulta Nos permite cambiar el estado de la propiedad consulta.
+ * @prop {setter} setMostrarResultado Nos permite cambiar el estado de la propiedad mostrarResultado.
+ * @prop {function} agregarConsultaResultado Es una funcion del provider que nos permite agregar el resultado de la consulta tanto a la db como al provider. Osea cuando usamos agregarConsulta también se utiliza esta función.
+ * @returns {JSX.Element} Se retorna el componente.
+ */
+export const FormConsultas = ({
+  agregarConsulta,
+  setConsulta,
+  setMostrarResultado,
+  agregarConsultaResultado,
+}) => {
+  /**
+   * Se crean los estados o propiedad cada una con su setter.
+   */
+  const [descripcion, setDescripcion] = useState("");
+  const [presupuesto, setPresupuesto] = useState(50);
+  const [tipo, setTipo] = useState("Online");
+
+  /**
+   * Se utiliza el useEffect para validar el formulario en tiempo real.
+   */
+  useEffect(() => {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".needs-validation");
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach((form) => {
+      form.addEventListener(
+        "submit",
+        (event) => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  }, []);
+
+  /**
+   * En esta función se comprueba que los datos esten bien y si es asi se crea la consulta asi como su resultado.
+   * También se utilizan los setter para cambiar los estados de las props.
+   * @function FormConsultas_handleSubmit
+   * @param {Event} e Es el evento del formulario
+   * @returns {None} No retorna nada
+   */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!descripcion || !presupuesto || !tipo || presupuesto &lt; 50) {
+      return;
+    }
+
+    const detail = {
+      descripcion: descripcion,
+      presupuesto: presupuesto,
+      tipo: tipo,
+    };
+    const id = await agregarConsulta(detail);
+    detail.id = id;
+    setConsulta(detail);
+    agregarConsultaResultado(detail);
+    setMostrarResultado(true);
+  };
+
+  return (
+    &lt;div className={`container ${estilos.contenedorForm}`}>
+      &lt;form
+        className={`needs-validation ${estilos.form}`}
+        noValidate
+        onSubmit={handleSubmit}
+      >
+        &lt;h2>Formulario Consultas&lt;/h2>
+        &lt;div className="mb-3">
+          &lt;label htmlFor="nombreProyecto" className="Form-label">
+            Nombre proyecto:
+          &lt;/label>
+          &lt;input
+            type="text"
+            className="Form-control"
+            id="nombreProyecto"
+            placeholder="Nombre del proyecto..."
+          />
+        &lt;/div>
+        &lt;div className="mb-3">
+          &lt;label htmlFor="descripcionProyecto" className="form-label">
+            Descripción proyecto:
+          &lt;/label>
+          &lt;textarea
+            className="form-control"
+            id="descripcionProyecto"
+            rows="5"
+            maxLength="500"
+            style={{ resize: "none" }}
+            placeholder="Breve descripción del proyecto..."
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+            required
+          >&lt;/textarea>
+          &lt;div className="invalid-feedback">
+            Por favor, proporciona una descripción.
+          &lt;/div>
+        &lt;/div>
+        &lt;div className="mb-3">
+          &lt;label htmlFor="presupuesto" className="Form-label">
+            Presupuesto:
+          &lt;/label>
+          &lt;input
+            type="number"
+            className="Form-control"
+            id="presupuesto"
+            placeholder="Presupuesto monetario..."
+            value={presupuesto}
+            onChange={(e) => setPresupuesto(e.target.value)}
+            min="50"
+            required
+          />
+          &lt;div className="invalid-feedback">
+            Por favor, proporciona un presupuesto válido (mínimo 50).
+          &lt;/div>
+        &lt;/div>
+        &lt;div>
+          &lt;label className="Form-label">Plataforma:&lt;/label>
+          &lt;div className="form-check">
+            &lt;input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+              onChange={(e) => setTipo(e.target.value)}
+              defaultChecked
+              required
+            />
+            &lt;label className="form-check-label" htmlFor="flexRadioDefault1">
+              Online
+            &lt;/label>
+          &lt;/div>
+          &lt;div className="form-check">
+            &lt;input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault2"
+              disabled
+            />
+            &lt;label className="form-check-label" htmlFor="flexRadioDefault2">
+              Físico
+            &lt;/label>
+          &lt;/div>
+        &lt;/div>
+        &lt;button className="btn btn-primary" type="submit">
+          Consultar
+        &lt;/button>
+      &lt;/form>
+    &lt;/div>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Blog.html">Blog</a></li><li><a href="Consultas.html">Consultas</a></li><li><a href="Contacto.html">Contacto</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Home.html">Home</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="SobreNosotros.html">SobreNosotros</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EntradaConsulta">EntradaConsulta</a></li><li><a href="global.html#EntradaPost">EntradaPost</a></li><li><a href="global.html#FormConsultas_handleSubmit">FormConsultas_handleSubmit</a></li><li><a href="global.html#FormContacto_handleSubmit">FormContacto_handleSubmit</a></li><li><a href="global.html#FormPosts_handleSubmit">FormPosts_handleSubmit</a></li><li><a href="global.html#LoginButton">LoginButton</a></li><li><a href="global.html#PasswordAlerts">PasswordAlerts</a></li><li><a href="global.html#PasswordChangeForm">PasswordChangeForm</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordRequirements">PasswordRequirements</a></li><li><a href="global.html#ScrollToTop">ScrollToTop</a></li><li><a href="global.html#SidebarBlog_handleClickCrear">SidebarBlog_handleClickCrear</a></li><li><a href="global.html#SidebarBlog_handleClickEliminarTodos">SidebarBlog_handleClickEliminarTodos</a></li><li><a href="global.html#SidebarBlog_handleClickMenuBtn">SidebarBlog_handleClickMenuBtn</a></li><li><a href="global.html#SidebarBlog_handleClickMostrarTodos">SidebarBlog_handleClickMostrarTodos</a></li><li><a href="global.html#addConsultaResultado">addConsultaResultado</a></li><li><a href="global.html#changeUserPass">changeUserPass</a></li><li><a href="global.html#createConsulta">createConsulta</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#deleteConsulta">deleteConsulta</a></li><li><a href="global.html#deleteConsultas">deleteConsultas</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePosts">deletePosts</a></li><li><a href="global.html#getAIResponse">getAIResponse</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getConsultas">getConsultas</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getPostsUsuario">getPostsUsuario</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleChangePassword">handleChangePassword</a></li><li><a href="global.html#handleClickCrear">handleClickCrear</a></li><li><a href="global.html#handleClickEliminarTodos">handleClickEliminarTodos</a></li><li><a href="global.html#handleClickMenuBtn">handleClickMenuBtn</a></li><li><a href="global.html#handleClose">handleClose</a></li><li><a href="global.html#handlePasswordChange">handlePasswordChange</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#resetForm">resetForm</a></li><li><a href="global.html#updatePost">updatePost</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed May 01 2024 18:05:52 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
