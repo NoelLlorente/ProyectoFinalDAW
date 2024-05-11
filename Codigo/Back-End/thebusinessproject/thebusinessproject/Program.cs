@@ -23,7 +23,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
-            builder.WithOrigins("http://localhost") // Reemplaza esto con la URL de tu aplicación React
+            builder.WithOrigins("http://localhost", "https://sincerely-epic-stinkbug.ngrok-free.app") // Reemplaza esto con la URL de tu aplicación React
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });

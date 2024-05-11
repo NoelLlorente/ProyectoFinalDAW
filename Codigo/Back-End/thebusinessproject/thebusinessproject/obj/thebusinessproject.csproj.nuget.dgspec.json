@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Noel\\source\\repos\\thebusinessproject\\thebusinessproject\\thebusinessproject.csproj": {}
+    "C:\\Users\\Noel\\Downloads\\Proyecto_Daw\\Codigo\\Back-End\\thebusinessproject\\thebusinessproject\\thebusinessproject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Noel\\source\\repos\\thebusinessproject\\thebusinessproject\\thebusinessproject.csproj": {
+    "C:\\Users\\Noel\\Downloads\\Proyecto_Daw\\Codigo\\Back-End\\thebusinessproject\\thebusinessproject\\thebusinessproject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Noel\\source\\repos\\thebusinessproject\\thebusinessproject\\thebusinessproject.csproj",
+        "projectUniqueName": "C:\\Users\\Noel\\Downloads\\Proyecto_Daw\\Codigo\\Back-End\\thebusinessproject\\thebusinessproject\\thebusinessproject.csproj",
         "projectName": "thebusinessproject",
-        "projectPath": "C:\\Users\\Noel\\source\\repos\\thebusinessproject\\thebusinessproject\\thebusinessproject.csproj",
+        "projectPath": "C:\\Users\\Noel\\Downloads\\Proyecto_Daw\\Codigo\\Back-End\\thebusinessproject\\thebusinessproject\\thebusinessproject.csproj",
         "packagesPath": "C:\\Users\\Noel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Noel\\source\\repos\\thebusinessproject\\thebusinessproject\\obj\\",
+        "outputPath": "C:\\Users\\Noel\\Downloads\\Proyecto_Daw\\Codigo\\Back-End\\thebusinessproject\\thebusinessproject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Noel\\AppData\\Roaming\\NuGet\\NuGet.Config",

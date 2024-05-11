@@ -2,8 +2,7 @@
   background-color: rgba(20, 20, 20, 0.966);
   padding: 1rem;
   color: white;
-  width: 40vw;
-  height: 25vh;
+  height: max-content;
   border-radius: 10px;
   margin-top: 1rem;
   display: flex;
@@ -24,5 +23,6 @@
 .contenedor_panelPost > p:last-child {
   align-self: flex-end;
   margin-top: auto;
+  margin-bottom: 0;
   font-size: 0.8em;
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dUio3sFVuK0CuxnaSf/OtT7r1ZHoOCUZDYdhKgO2cELxwczYHUpdjoVO0hUcd5EYC1bO4GIe09Kkjx7shcXPmQ==",
+  "dgSpecHash": "+QaxAj7e1M5grSXKBIgwAFxXALdo2oHNcHZRuw7Oqcc6fEvvFKW80QMw/6Z2Z1XQEQN01KvitfncxjejMqwE1w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Noel\\source\\repos\\thebusinessproject\\thebusinessproject\\thebusinessproject.csproj",
+  "projectFilePath": "C:\\Users\\Noel\\Downloads\\Proyecto_Daw\\Codigo\\Back-End\\thebusinessproject\\thebusinessproject\\thebusinessproject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Noel\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Noel\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
