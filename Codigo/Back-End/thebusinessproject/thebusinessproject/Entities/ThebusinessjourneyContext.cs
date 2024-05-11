@@ -4,33 +4,60 @@ using Microsoft.EntityFrameworkCore;
 
 namespace thebusinessproject.Entities;
 
+/// <summary>
+/// Clase parcial que representa el contexto de la base de datos para el proyecto de negocio.
+/// </summary>
 public partial class ThebusinessjourneyContext : DbContext
 {
+    /// <summary>
+    /// Constructor por defecto.
+    /// </summary>
     public ThebusinessjourneyContext()
     {
     }
 
+    /// <summary>
+    /// Constructor que acepta opciones para la configuración del contexto de la base de datos.
+    /// </summary>
     public ThebusinessjourneyContext(DbContextOptions<ThebusinessjourneyContext> options)
         : base(options)
     {
     }
-
+    /// <summary>
+    /// Representa la tabla 'consulta' en la base de datos.
+    /// </summary>
     public virtual DbSet<Consultum> Consulta { get; set; }
-
+    /// <summary>
+    /// Representa la tabla 'post' en la base de datos.
+    /// </summary>
     public virtual DbSet<Post> Posts { get; set; }
-
+    /// <summary>
+    /// Representa la tabla 'resultado_consulta' en la base de datos.
+    /// </summary>
     public virtual DbSet<ResultadoConsultum> ResultadoConsulta { get; set; }
-
+    /// <summary>
+    /// Representa la tabla 'usuario' en la base de datos.
+    /// </summary>
     public virtual DbSet<Usuario> Usuarios { get; set; }
-
+    /// <summary>
+    /// Representa la tabla 'usuario_consulta' en la base de datos.
+    /// </summary>
     public virtual DbSet<UsuarioConsultum> UsuarioConsulta { get; set; }
-
+    /// <summary>
+    /// Representa la tabla 'usuario_post' en la base de datos.
+    /// </summary>
     public virtual DbSet<UsuarioPost> UsuarioPosts { get; set; }
 
+    /// <summary>
+    /// Método para configurar el contexto de la base de datos.
+    /// </summary>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySQL("server=localhost;user=root;password=root;database=thebusinessjourney;");
 
+    /// <summary>
+    /// Método para configurar el modelo de la base de datos.
+    /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Consultum>(entity =>
@@ -77,20 +104,16 @@ public partial class ThebusinessjourneyContext : DbContext
 
             entity.HasIndex(e => e.Idconsulta, "consulta_idx");
 
+            entity.HasIndex(e => e.Idconsulta, "idconsulta_UNIQUE").IsUnique();
+
             entity.Property(e => e.IdresultadoConsulta).HasColumnName("idresultado_consulta");
             entity.Property(e => e.Idconsulta).HasColumnName("idconsulta");
-            entity.Property(e => e.Pasos)
-                .HasMaxLength(255)
-                .HasColumnName("pasos");
-            entity.Property(e => e.PresupuestoEstimado)
-                .HasMaxLength(255)
-                .HasColumnName("presupuestoEstimado");
-            entity.Property(e => e.Probabilidad)
-                .HasMaxLength(255)
-                .HasColumnName("probabilidad");
+            entity.Property(e => e.Resultado)
+                .HasMaxLength(5000)
+                .HasColumnName("resultado");
 
-            entity.HasOne(d => d.IdconsultaNavigation).WithMany(p => p.ResultadoConsulta)
-                .HasForeignKey(d => d.Idconsulta)
+            entity.HasOne(d => d.IdconsultaNavigation).WithOne(p => p.ResultadoConsultum)
+                .HasForeignKey<ResultadoConsultum>(d => d.Idconsulta)
                 .HasConstraintName("consulta");
         });
 
@@ -161,5 +184,8 @@ public partial class ThebusinessjourneyContext : DbContext
         OnModelCreatingPartial(modelBuilder);
     }
 
+    /// <summary>
+    /// Método parcial para configurar el modelo de la base de datos.
+    /// </summary>
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

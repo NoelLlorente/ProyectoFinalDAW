@@ -147,3 +147,14 @@ C:\Users\Noel\source\repos\thebusinessproject\thebusinessproject\obj\Debug\net8.
 C:\Users\Noel\source\repos\thebusinessproject\thebusinessproject\obj\Debug\net8.0\thebusinessproject.pdb
 C:\Users\Noel\source\repos\thebusinessproject\thebusinessproject\obj\Debug\net8.0\thebusinessproject.genruntimeconfig.cache
 C:\Users\Noel\source\repos\thebusinessproject\thebusinessproject\obj\Debug\net8.0\ref\thebusinessproject.dll
+C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\Debug\net8.0\appsettings.Development.json
+C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\Debug\net8.0\appsettings.json
+C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\Debug\net8.0\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\Debug\net8.0\bin\Debug\net8.0\appsettings.json
+C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\Debug\net8.0\bin\Debug\net8.0\thebusinessproject.deps.json
+C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\Debug\net8.0\bin\Debug\net8.0\thebusinessproject.runtimeconfig.json
+C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\Debug\net8.0\thebusinessproject.exe
+C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\Debug\net8.0\thebusinessproject.deps.json
+C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\Debug\net8.0\thebusinessproject.runtimeconfig.json
+C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\Debug\net8.0\thebusinessproject.dll
+C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\Debug\net8.0\thebusinessproject.pdb

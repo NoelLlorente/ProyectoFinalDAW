@@ -11,46 +11,27 @@ namespace thebusinessproject.Controllers
     [ApiController]
     public class ConsultumController : ControllerBase
     {
+        /// <summary>
+        /// Declaración del Context de la DB. Se utiliza para realizar las operaciones con la db.
+        /// </summary>
         private readonly ThebusinessjourneyContext _DBContext;
 
+
+        /// <summary>
+        /// Constructor que inicializa el contexto de la base de datos.
+        /// </summary>
+        /// <param name="DBContext">Es el contexto de la db</param>
         public ConsultumController(ThebusinessjourneyContext DBContext)
         {
             _DBContext = DBContext;
         }
-
-        //[HttpGet("getConsultasUsuario")]
-        //public async Task<ActionResult<List<ConsultumDTO>>> consultasUsuario(string correo)
-        //{
-        //    try
-        //    {
-        //        var consultasUsuario = await _DBContext.UsuarioConsulta.Where(u => u.IdUsuario == correo).Join(_DBContext.Consulta, uc => uc.IdConsulta,
-        //        c => c.Id, (uc, c) => new ConsultumDTO
-        //        {
-        //            Id = c.Id,
-        //            Descripcion = c.Descripcion,
-        //            Presupuesto = c.Presupuesto,
-        //            Tipo = c.Tipo,
-        //            Fecha = c.Fecha,
-        //        }).ToListAsync();
-
-
-
-        //        if (consultasUsuario.Count < 0)
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            return consultasUsuario;
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest($"Error al obtener consultas del usuario: {ex.Message}");
-        //    }
-        //}
-
+  
+        /// <summary>
+        /// Método para eliminar una consulta específica de un usuario.
+        /// </summary>
+        /// <param name="correo">Es el correo del usuario</param>
+        /// <param name="idConsulta">Es el id de la consulta a eliminar</param>
+        /// <returns>Devuelve true si se ha eliminado correctamente, sino false.</returns>
         [HttpGet("eliminarConsulta")]
         public async Task<ActionResult<bool>> EliminarConsultaUsuario(string correo, int idConsulta)
         {
@@ -102,6 +83,11 @@ namespace thebusinessproject.Controllers
             }
         }
 
+        /// <summary>
+        /// Método para eliminar todas las consultas de un usuario.
+        /// </summary>
+        /// <param name="correo">Es el correo del usuario</param>
+        /// <returns>Devuelve true si todo ha ido bien, sino false</returns>
         [HttpGet("eliminarConsultas")]
         public async Task<ActionResult<bool>> EliminarConsultasUsuario(string correo)
         {
@@ -153,9 +139,14 @@ namespace thebusinessproject.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Método para crear una nueva consulta.
+        /// </summary>
+        /// <param name="correo">Es el correo del usuario</param>
+        /// <param name="consulta">Es el objeto que tiene los datos de la consulta a crear</param>
+        /// <returns>La consulta creado</returns>
         [HttpPost("crearConsulta")]
-        public async Task<ActionResult<ConsultumDTO>?> CrearConsulta(string correo, [FromBody] ConsultumDTO consulta)
+        public async Task<ActionResult<ConsultaDTO>?> CrearConsulta(string correo, [FromBody] ConsultaDTO consulta)
         {
             try
             {
@@ -192,7 +183,7 @@ namespace thebusinessproject.Controllers
                     await _DBContext.SaveChangesAsync();
 
                     // Retorna la consulta creada, incluyendo el id generado por la base de datos
-                    return new ConsultumDTO
+                    return new ConsultaDTO
                     {
                         Id = nuevaConsulta.Id,
                         Descripcion = nuevaConsulta.Descripcion,
@@ -210,34 +201,37 @@ namespace thebusinessproject.Controllers
             }
         }
 
+        /// <summary>
+        /// Método para obtener todas las consultas y sus resultados de un usuario en concreto.
+        /// </summary>
+        /// <param name="correo">Es el correo del usuario</param>
+        /// <returns>Las consultas con sus respectivos resultados</returns>
         [HttpGet("getConsultasYResultadosUsuario")]
-        public async Task<ActionResult<List<ConsultumDTO>>> ConsultasYResultadosUsuario(string correo)
+        public async Task<ActionResult<List<ConsultaDTO>>> ConsultasYResultadosUsuario(string correo)
         {
             try
             {
-                var consultasUsuario = await _DBContext.UsuarioConsulta
-                    .Where(u => u.IdUsuario == correo) // Asegúrate de que 'Usuario' es la propiedad correcta que tiene el correo electrónico
+                // Se obtiene las consultas de un usuario dado un correo, cada consulta con su resultado.
+                var consultasUsuario =  _DBContext.UsuarioConsulta
+                    .Where(u => u.IdUsuario == correo) 
                     .Join(_DBContext.Consulta, uc => uc.IdConsulta, c => c.Id, (uc, c) => c)
-                    .Include(c => c.ResultadoConsulta)
-                    .Select(c => new ConsultumDTO
+                    .Include(c => c.ResultadoConsultum)
+                    .Select(c => new ConsultaDTO
                     {
                         Id = c.Id,
                         Descripcion = c.Descripcion,
                         Presupuesto = c.Presupuesto,
                         Tipo = c.Tipo,
                         Fecha = c.Fecha,
-                        ResultadoConsultum = c.ResultadoConsulta.Select(rc => new ResultadoConsultumDTO
+                        ResultadoConsulta = c.ResultadoConsultum != null ? new ResultadoConsultaDTO
                         {
-                            IdresultadoConsulta = rc.IdresultadoConsulta,
-                            Pasos = rc.Pasos,
-                            PresupuestoEstimado = rc.PresupuestoEstimado,
-                            Probabilidad = rc.Probabilidad,
-                        }).ToList()
-                    })
-                    .ToListAsync();
+                            IdresultadoConsulta = c.ResultadoConsultum.IdresultadoConsulta,
+                            Resultado = c.ResultadoConsultum.Resultado,
+                            Idconsulta = c.ResultadoConsultum.Idconsulta,
+                        } : null
+                    }).ToList();
 
-              
-                   return consultasUsuario;
+                return consultasUsuario;
             }
             catch (Exception ex)
             {

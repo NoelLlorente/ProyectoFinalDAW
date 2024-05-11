@@ -11,36 +11,25 @@ namespace thebusinessproject.Controllers
     [Route("/[controller]")]
     public class UsuarioController : ControllerBase
     {
-
+        /// <summary>
+        /// Declaración del Context de la DB. Se utiliza para realizar las operaciones con la db.
+        /// </summary>
         private readonly ThebusinessjourneyContext _DBContext;
 
+        /// <summary>
+        /// Constructor que inicializa el contexto de la base de datos.
+        /// </summary>
+        /// <param name="DBContext">Es el contexto de la db</param>
         public UsuarioController(ThebusinessjourneyContext DBContext)
         {
             _DBContext = DBContext;
         }
 
-        //[HttpGet("getUsuarios")]
-        //public async Task<ActionResult<List<UsuarioDTO>>> GetUsuarios()
-        //{
-        //    var lista = await _DBContext.Usuarios.Select(
-        //        s => new UsuarioDTO
-        //        {
-        //            Correo = s.Correo,
-
-        //            Fecha = s.Fecha,
-        //        }
-        //    ).ToListAsync();
-
-        //    if (lista.Count < 0)
-        //    {
-        //        return NotFound();
-        //    }
-        //    else
-        //    {
-        //        return lista;
-        //    }
-        //}
-
+        /// <summary>
+        /// Método para validar si un usuario existe.
+        /// </summary>
+        /// <param name="correo">Es el correo del usuario a validar</param>
+        /// <returns>Verdadero si el usuario existe, falso en caso contrario</returns>
         [HttpGet("validarUsuario")]
         public async Task<ActionResult<bool>> ValidarUsuario([FromQuery] string correo)
         {
@@ -53,11 +42,15 @@ namespace thebusinessproject.Controllers
             }
             catch (Exception ex)
             {
-                // Manejar la excepción (por ejemplo, registrarla o devolver un error 500)
                 return StatusCode(500, $"Error al validar usuario: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Método para insertar un nuevo usuario.
+        /// </summary>
+        /// <param name="usuario">Es el usuario a insertar</param>
+        /// <returns>Verdadero si el usuario se insertó con éxito, falso en caso contrario</returns>
         [HttpPost("guardarUsuario")]
         public async Task<ActionResult<bool>> InsertUser([FromBody] UsuarioDTO usuario)
         {

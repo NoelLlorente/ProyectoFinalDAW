@@ -4,6 +4,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <BaseOutputPath></BaseOutputPath>
+    <DocumentationFile>C:\Users\Noel\Downloads\Proyecto_Daw\Codigo\Back-End\thebusinessproject\Documentación\doc.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

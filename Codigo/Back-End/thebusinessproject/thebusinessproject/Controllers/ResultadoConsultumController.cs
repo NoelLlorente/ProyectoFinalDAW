@@ -10,17 +10,27 @@ namespace thebusinessproject.Controllers
     [ApiController]
     public class ResultadoConsultumController : Controller
     {
-
+        /// <summary>
+        /// Declaración del Context de la DB. Se utiliza para realizar las operaciones con la db.
+        /// </summary>
         private readonly ThebusinessjourneyContext _DBContext;
 
+        /// <summary>
+        /// Constructor que inicializa el contexto de la base de datos.
+        /// </summary>
+        /// <param name="DBContext">Es el contexto de la base de datos</param>
         public ResultadoConsultumController(ThebusinessjourneyContext DBContext)
         {
             _DBContext = DBContext;
         }
 
-
+        /// <summary>
+        /// Método para crear un resultado para una consulta.
+        /// </summary>
+        /// <param name="resultado">Es el objeto que contiene los datos del resultado que va a almacenar en la db</param>
+        /// <returns>El resultado que se ha almacenado en la db</returns>
         [HttpPost("crearResultadoConsulta")]
-        public async Task<ActionResult<ResultadoConsultumDTO>?> CrearConsulta([FromBody] ResultadoConsultumDTO resultado)
+        public async Task<ActionResult<ResultadoConsultaDTO>?> CrearConsulta([FromBody] ResultadoConsultaDTO resultado)
         {
             try
             {
@@ -31,9 +41,7 @@ namespace thebusinessproject.Controllers
                     // Crea una nueva consulta
                     var nuevoResultadoConsulta = new ResultadoConsultum
                     {
-                        Pasos = resultado.Pasos,
-                        PresupuestoEstimado = resultado.PresupuestoEstimado,
-                        Probabilidad = resultado.Probabilidad,
+                        Resultado = resultado.Resultado,
                         Idconsulta = resultado.Idconsulta,
                     };
 
@@ -41,12 +49,11 @@ namespace thebusinessproject.Controllers
                     _DBContext.ResultadoConsulta.Add(nuevoResultadoConsulta);
                     await _DBContext.SaveChangesAsync(acceptAllChangesOnSuccess: true);
 
-                    return new ResultadoConsultumDTO
+                    // Se retorna un objeto DTO que contiene los datos del resultado de la consulta
+                    return new ResultadoConsultaDTO
                     {
                         IdresultadoConsulta = nuevoResultadoConsulta.IdresultadoConsulta,
-                        Pasos = nuevoResultadoConsulta.Pasos,
-                        PresupuestoEstimado = nuevoResultadoConsulta.PresupuestoEstimado,
-                        Probabilidad = nuevoResultadoConsulta.Probabilidad,
+                        Resultado = nuevoResultadoConsulta.Resultado,
                         Idconsulta = nuevoResultadoConsulta.Idconsulta
                     };
                 }
